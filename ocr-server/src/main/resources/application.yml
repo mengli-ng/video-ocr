@@ -1,0 +1,105 @@
+server:
+  context-path: ${SERVER_CONTEXT_PATH}
+
+spring:
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST_NAME}/${MYSQL_DATABASE}?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: ${MYSQL_ROOT_PASSWORD}
+  jpa:
+    generate-ddl: true
+  http:
+    multipart:
+      max-file-size: 4096MB
+      max-request-size: 4096MB
+
+transcode:
+  formats:
+    browse:
+      format: mp4
+      video-codec: libx264
+      bitrate: 640000
+  threads: 5
+
+storage:
+  base-path: ${STORAGE_BASE_PATH}
+  base-url: ${STORAGE_BASE_URL}
+
+script:
+  base-path: /scripts/
+
+task:
+  output-path: /tmp
+  threads: 10
+
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://localhost/video_ocr?characterEncoding=utf-8
+    username: root
+    password: password
+
+storage:
+  base-path: /Users/mengli/Temp/docker-test-web/
+  base-url: http://localhost:9003/
+
+script:
+  base-path: /Users/mengli/Work/MyProjects/video_ocr/ocr-server/src/main/scripts/
+
+task:
+  output-path: /Users/mengli/Temp/docker-test-web/
+
+---
+spring:
+  profiles: docker
+  datasource:
+    url: jdbc:mysql://db/video_ocr?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: ${MYSQL_ROOT_PASSWORD}
+
+storage:
+  base-path: ${STORAGE_BASE_PATH}
+  base-url: http://${STORAGE_BASE_URL}/
+
+script:
+  base-path: /scripts
+
+task:
+  output-path: /tmp
+  threads: 10
+
+---
+spring:
+  profiles: aliyun
+  datasource:
+    url: jdbc:mysql://localhost/video_ocr?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: Dream0628!
+
+storage:
+  base-path: /usr/local/nginx/html/
+  base-url: http://www.xiaoheifamily.com/
+
+script:
+  base-path: /usr/local/video-ocr/scripts/
+
+task:
+  output-path: /tmp/ocr-task/
+---
+spring:
+  profiles: aliyun-lingpan
+  datasource:
+    url: jdbc:mysql://localhost/video_ocr?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: cdvcloud
+
+storage:
+  base-path: /usr/local/nginx/html/
+  base-url: http://101.200.228.240/
+
+script:
+  base-path: /usr/local/video-ocr/scripts/
+
+task:
+  output-path: /tmp/ocr-task/
