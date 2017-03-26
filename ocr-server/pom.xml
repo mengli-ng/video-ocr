@@ -85,7 +85,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.basedir}/../build/server</outputDirectory>
+							<outputDirectory>${project.basedir}/docker</outputDirectory>
 							<resources>
 								<resource>
 									<directory>${project.basedir}/src/main/scripts</directory>

@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.json",
-    "release": "ng build --prod --output-path=../build/web/html",
+    "release": "ng build --prod --output-path=./docker/html",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
