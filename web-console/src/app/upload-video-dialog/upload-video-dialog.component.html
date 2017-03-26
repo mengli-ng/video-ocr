@@ -1,0 +1,33 @@
+<h2 md-dialog-title>上传视频</h2>
+<md-dialog-content>
+  <div [hidden]="!files.length">
+    <button tabindex="-1" class="btn-browse" md-raised-button [disabled]="uploading">继续添加</button>
+    <button tabindex="-1" md-raised-button [disabled]="uploading" (click)="upload()">开始上传</button>
+  </div>
+  <div [hidden]="files.length" >
+    <div class="btn-browse btn-browse-large" fxLayoutAlign="center center">
+      <span>点击添加视频</span>
+    </div>
+  </div>
+  <div *ngIf="files.length" style="min-height: 200px; margin-top: 10px">
+    <div *ngFor="let file of files" style="padding: 5px 0">
+      <span>{{file.fileName}}</span>
+      <a *ngIf="!uploading" href="javascript:void(0)" (click)="deleteFile(file)">删除</a>
+      <md-progress-bar mode="determinate"
+                       [value]="file.progressPercent ? file.progressPercent : 0"
+                       style="margin: 2px 0;"></md-progress-bar>
+    </div>
+  </div>
+</md-dialog-content>
+<md-dialog-actions align="center">
+  <button
+    md-raised-button
+    md-dialog-close
+    [disabled]="uploading">取消</button>
+  <button
+    style="margin-left: 10px;"
+    md-raised-button
+    color="primary"
+    [disabled]="uploading"
+    (click)="ok()">确定</button>
+</md-dialog-actions>

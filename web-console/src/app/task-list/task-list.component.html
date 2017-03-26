@@ -1,0 +1,45 @@
+<div fxLayout="column">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div>
+      <button md-raised-button color="primary" (click)="create()">创建任务</button>
+      <button md-raised-button (click)="query()">刷新列表</button>
+    </div>
+    <div>
+      <md-input-container>
+        <input mdInput placeholder="按视频名称查询" (keyup)="queryByVideoName($event.srcElement.value)">
+      </md-input-container>
+    </div>
+  </div>
+  <div>
+    <md-data-table>
+      <thead>
+      <tr>
+        <th style="text-align: center;">视频名称</th>
+        <th style="text-align: center;">创建时间</th>
+        <th style="text-align: center;">任务状态</th>
+        <th style="text-align: center;" width="150px">操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let task of tasks">
+        <td style="text-align: center;">{{task.videoName}}</td>
+        <td style="text-align: center;">{{task.createdTime | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+        <td style="text-align: center;">{{task.status | taskStatusText}}</td>
+        <td style="text-align: center;">
+          <a title="查看任务结果" aria-label="查看任务结果" (click)="showResult(task)">
+            <md-icon>list</md-icon>
+          </a>
+          <a title="删除" aria-label="删除" (click)="delete(task)">
+            <md-icon>delete_forever</md-icon>
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </md-data-table>
+    <md-pagination name="basic"
+                   [model]="pagination"
+                   (on-pagination-change)="onPageChanged($event)"
+                   [items-per-page-options]="[10, 20]">
+    </md-pagination>
+  </div>
+</div>

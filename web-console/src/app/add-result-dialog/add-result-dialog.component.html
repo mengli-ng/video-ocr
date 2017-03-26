@@ -1,0 +1,25 @@
+<h2 md-dialog-title>添加字幕</h2>
+<md-dialog-content>
+  <div fxLayout="column">
+    <div>
+      <md-input-container style="width: 100%">
+        <input mdInput placeholder="字幕位置" [(ngModel)]="position">
+      </md-input-container>
+    </div>
+    <div>
+      <md-input-container style="width: 100%">
+        <input mdInput placeholder="字幕内容" [(ngModel)]="text">
+      </md-input-container>
+    </div>
+  </div>
+</md-dialog-content>
+<md-dialog-actions align="center">
+  <button
+    md-raised-button
+    md-dialog-close>取消</button>
+  <button
+    style="margin-left: 10px;"
+    md-raised-button
+    color="primary"
+    (click)="ok()">确定</button>
+</md-dialog-actions>

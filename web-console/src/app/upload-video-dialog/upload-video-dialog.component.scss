@@ -1,0 +1,13 @@
+.btn-browse-large {
+  width: 380px;
+  height: 200px;
+  border: 1px dashed #ccc;
+  font-size: 26px;
+  color: #ccc;
+  margin: 10px auto;
+  cursor: pointer;
+
+  &:hover {
+    color: #666;
+  }
+}

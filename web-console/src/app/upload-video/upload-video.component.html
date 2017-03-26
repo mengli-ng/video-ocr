@@ -1,0 +1,48 @@
+<div fxLayout="column">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div>
+      <button md-raised-button color="primary" (click)="upload()">上传视频</button>
+      <button md-raised-button (click)="query()">刷新列表</button>
+    </div>
+    <div>
+      <md-input-container>
+        <input mdInput placeholder="按视频名称查询" (keyup)="queryByName($event.srcElement.value)">
+      </md-input-container>
+    </div>
+  </div>
+  <div>
+    <md-data-table>
+      <thead>
+      <tr>
+        <th style="text-align: center;">视频名称</th>
+        <th style="text-align: center;">创建时间</th>
+        <th style="text-align: center;">视频状态</th>
+        <th style="text-align: center;" width="150px">操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let video of videos">
+        <td style="text-align: center;">{{video.name}}</td>
+        <td style="text-align: center;">{{video.uploadTime | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+        <td style="text-align: center;">{{video.status | videoStatusText}}</td>
+        <td style="text-align: center;">
+          <a title="播放" aria-label="播放" (click)="play(video)" [class.disabled]="video.status != 'READY'">
+            <md-icon>play_arrow</md-icon>
+          </a>
+          <a download [href]="video.fileUrl" title="下载" aria-label="下载">
+            <md-icon>file_download</md-icon>
+          </a>
+          <a title="删除" aria-label="删除" (click)="delete(video)">
+            <md-icon>delete_forever</md-icon>
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </md-data-table>
+    <md-pagination name="basic"
+                   [model]="pagination"
+                   (on-pagination-change)="onPageChanged($event)"
+                   [items-per-page-options]="[10, 20]">
+    </md-pagination>
+  </div>
+</div>

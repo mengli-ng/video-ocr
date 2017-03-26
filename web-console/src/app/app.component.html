@@ -1,0 +1,23 @@
+<div class="root" fxLayout="column">
+  <div class="navbar mat-elevation-z6" fxFlex="0 0 auto">
+    <md-toolbar color="primary">
+      <h1 routerLink="/">视频字幕提取系统</h1>
+    </md-toolbar>
+  </div>
+  <div fxLayout="row" fxFlex="1 1 auto">
+    <div class="sidenav" fxFlex="0 0 auto">
+      <md-nav-list>
+        <div *ngFor="let navItem of navItems" md-list-item>
+          <a class="nav-item" [routerLink]="[navItem.route]" routerLinkActive="active">
+            <md-icon>{{navItem.icon}}</md-icon>
+            <span class="list-item-text">{{navItem.name}}</span>
+          </a>
+        </div>
+      </md-nav-list>
+    </div>
+    <div class="main" fxFlex="1 1 auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,51 @@
+<div fxLayout="column" style="height: 100%;">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div>
+      <a download md-raised-button color="primary" [href]="getExportHref()">导出结果</a>
+      <button md-raised-button (click)="back()">返回</button>
+    </div>
+    <div>
+      <button md-raised-button (click)="addResult()" style="margin-right: 20px">添加字幕</button>
+    </div>
+  </div>
+  <div fxLayout="row" fxFlex="1 1 auto" style="margin-top: 20px;">
+    <div>
+      <video class="video-js vjs-default-skin vjs-big-play-centered"
+             controls
+             preload="auto"
+             width="480" height="360">
+      </video>
+    </div>
+    <div fxFlex="1 1 auto" style="margin-left: 20px; position: relative;">
+      <div style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; overflow: auto;">
+        <md-data-table>
+          <thead>
+          <tr>
+            <th style="text-align: center;" width="140px;">字幕时间</th>
+            <th style="text-align: center;">字幕内容</th>
+            <th style="text-align: center;" width="120px;">操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let result of task.results" [class.selected]="result.selected">
+            <td style="text-align: center;" (click)="clickResult(result)">{{result.position | position}}</td>
+            <td style="text-align: center; padding: 0 10px;" (click)="clickResult(result)">
+              <md-input-container style="width: 100%;">
+                <textarea mdInput (keyup)="result.changed = true">{{result.text}}</textarea>
+              </md-input-container>
+            </td>
+            <td style="text-align: center;">
+              <a title="保存" aria-label="保存" (click)="saveText($event, result)" [class.disabled]="!result.changed">
+                <md-icon>save</md-icon>
+              </a>
+              <a title="删除" aria-label="删除" (click)="deleteResult(result)">
+                <md-icon>delete_forever</md-icon>
+              </a>
+            </td>
+          </tr>
+          </tbody>
+        </md-data-table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+app-home {
+  h1 {
+    font-size: 30px;
+    font-weight: normal;
+    padding: 40px;
+    margin: 0;
+    text-align: center;
+  }
+
+  .card-container {
+    margin-top: 20px;
+
+    md-card {
+      width: 180px;
+      cursor: pointer;
+
+      md-card-header {
+        .mat-card-header-text {
+          flex: 1;
+          md-card-title.mat-card-title {
+            font-size: 20px;
+            text-align: center;
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.54);
+          }
+          md-card-subtitle {
+            text-align: center;
+          }
+        }
+      }
+
+      md-card-content {
+        height: 100px;
+        .material-icons {
+          font-size: 72px;
+          color: rgba(0, 0, 0, 0.54);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

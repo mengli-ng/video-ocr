@@ -1,0 +1,48 @@
+.root {
+  min-height: 100%;
+}
+
+.navbar {
+  position: relative;
+  z-index: 10;
+  md-toolbar {
+    h1 {
+      font-size: 20px;
+      cursor: pointer;
+    }
+  }
+}
+
+.sidenav {
+  box-shadow: 3px 0 6px rgba(0,0,0,.24);
+
+  a.nav-item {
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    display: flex;
+    padding: 15px 70px 15px 50px;
+    &:hover {
+      font-weight: bold;
+      background-color: #E7F4FF;
+    }
+    &.active {
+      font-weight: bold;
+      background-color: #E7F4FF;
+    }
+    span {
+      margin-left: 20px;
+      color: rgba(0,0,0,.54);
+    }
+    md-icon {
+      color: rgba(0,0,0,.54);
+    }
+  }
+}
+
+.mat-list, .mat-nav-list {
+  padding-top: 0 !important;
+}
+
+.main {
+  padding: 20px;
+  box-sizing: border-box;
+}

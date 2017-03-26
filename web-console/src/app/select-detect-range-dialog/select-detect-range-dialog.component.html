@@ -1,0 +1,20 @@
+<md-dialog-content>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <i class="material-icons" style="font-size: 16px; color: #999">info_outline</i>
+    <span style="margin-left: 2px; font-size: 14px; color: #999">用鼠标在图片上框选出字幕区域</span>
+  </div>
+  <div id="canvas-container" style="position: relative; margin-top: 5px;">
+    <canvas id="draw-canvas" style="position: absolute; left: 0; top: 0; z-index: 1; cursor: crosshair;"></canvas>
+    <canvas id="bg-canvas" style="position: absolute; left: 0; top: 0;"></canvas>
+  </div>
+</md-dialog-content>
+<md-dialog-actions align="center">
+  <button
+    md-raised-button
+    md-dialog-close>取消</button>
+  <button
+    style="margin-left: 10px;"
+    md-raised-button
+    color="primary"
+    (click)="ok()">确定</button>
+</md-dialog-actions>

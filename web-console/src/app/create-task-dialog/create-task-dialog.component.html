@@ -1,0 +1,45 @@
+<h2 md-dialog-title>创建任务</h2>
+<md-dialog-content>
+  <div class="flex-container" fxLayout="column">
+    <div class="flex-item">
+      <md-input-container style="width: 100%">
+        <input tabindex="-1" mdInput placeholder="选择视频" [mdAutocomplete]="auto" [formControl]="selectVideoCtrl">
+      </md-input-container>
+      <md-autocomplete #auto="mdAutocomplete" [displayWith]="displayVideoName">
+        <md-option *ngFor="let video of selectedVideos | async" [value]="video">
+          {{ video.name }}
+        </md-option>
+      </md-autocomplete>
+    </div>
+    <div style="text-align: center; position: relative;">
+      <video class="video-js vjs-default-skin vjs-big-play-centered"
+             controls
+             preload
+             width="560" height="315"
+             style="margin: 0 auto;">
+      </video>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" style="margin: 10px 0;" >
+      <div fxLayoutAlign="start center">
+        <button tabindex="-1" md-raised-button (click)="detect()">选取字幕区域</button>
+        <span style="margin-left: 5px; font-size: 12px; color: #999; width: 150px;">{{detectRange ? detectRangeText : ''}}</span>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <label>选择语种：</label>
+        <md-select  [(ngModel)]="selectedLanguage">
+          <md-option *ngFor="let language of languages" [value]="language.code">{{ language.name }}</md-option>
+        </md-select>
+      </div>
+    </div>
+  </div>
+</md-dialog-content>
+<md-dialog-actions align="center">
+  <button
+    md-raised-button
+    md-dialog-close>取消</button>
+  <button
+    style="margin-left: 10px;"
+    md-raised-button
+    color="primary"
+    (click)="ok()">确定</button>
+</md-dialog-actions>
