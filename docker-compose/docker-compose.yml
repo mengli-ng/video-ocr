@@ -1,0 +1,43 @@
+version: "3"
+services:
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306"
+    networks:
+      - video-ocr-network
+    volumes:
+      - "${VIDEO_OCR_HOME}/volumes/db:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+  server:
+    image: dreamcoder/video-ocr-server
+    ports:
+      - "8080"
+    networks:
+      - video-ocr-network
+    volumes:
+      - "${VIDEO_OCR_HOME}/volumes/storage:/storage"
+    environment:
+      SERVER_CONTEXT_PATH: ${SERVER_CONTEXT_PATH}
+      MYSQL_HOST_NAME: db
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      STORAGE_BASE_PATH: /storage
+      STORAGE_BASE_URL: http://${HOST_NAME}:${HOST_PORT}/storage
+    depends_on:
+      - db
+  web:
+    image: dreamcoder/video-ocr-web
+    ports:
+      - "80:80"
+    networks:
+      - video-ocr-network
+    volumes:
+      - "${VIDEO_OCR_HOME}/volumes/storage:/usr/share/nginx/html/storage"
+    depends_on:
+      - server
+
+networks:
+  video-ocr-network:
