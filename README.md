@@ -1,5 +1,5 @@
 # video-ocr
-video-ocr是一个视频字幕识别的应用程序，包括服务端(ocr-server)和客户端(web-console)，包括视频管理和任务管理的功能，
+video-ocr是一个视频字幕识别的应用程序，包括服务端(ocr-server)和客户端(web-console)，具有视频管理和任务管理的功能，
 字幕识别通过[imagemagick](https://www.imagemagick.org)和[tesseract-ocr](https://github.com/tesseract-ocr/tesseract)实现。
 
 ## 开发
