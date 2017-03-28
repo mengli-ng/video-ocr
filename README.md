@@ -1,9 +1,9 @@
 # video-ocr
-**video-ocr**是一个视频字幕识别的应用程序，包括服务端(ocr-server)和客户端（web-console），具有视频管理和字幕识别任务管理的功能，
-字幕识别使用了[imagemagick](https://www.imagemagick.org)和[tesseract-ocr](https://github.com/tesseract-ocr/tesseract)。
+video-ocr是一个视频字幕识别的应用程序，包括服务端(ocr-server)和客户端(web-console)，包括视频管理和任务管理的功能，
+字幕识别通过[imagemagick](https://www.imagemagick.org)和[tesseract-ocr](https://github.com/tesseract-ocr/tesseract)实现。
 
 ## 开发
-**video-ocr**使用了以下框架
+video-ocr使用了以下框架
 
 * [spring-boot](https://projects.spring.io/spring-boot/)
 * [angular2](https://angular.io/)
@@ -11,29 +11,28 @@
 * [angular-material](https://material.angular.io/)
 
 ## 发布到[Docker Hub](https://hub.docker.com/)
-更新应用程序时，需要重新发布到Docker Hub用于应用程序的部署。
+更新应用程序时，需要重新发布到[Docker Hub](https://hub.docker.com/)用于应用程序的部署。
 
-* 在ocr-server项目中执行以下步骤
+* 在ocr-server中执行
 <pre>
 mvn clean package
 cd docker
 ./build.sh
 </pre>
 
-* 在web-console项目中执行以下步骤
+* 在web-console中执行
 <pre>
 npm run release
 cd docker
 ./build.sh
 </pre>
 
-发布的docker repository
+发布的repository
 * [dreamcoder/video-ocr-server](https://hub.docker.com/r/dreamcoder/video-ocr-server/)
 * [dreamcoder/video-ocr-web](https://hub.docker.com/r/dreamcoder/video-ocr-web/)
 
 ## 部署
-**video-ocr**使用[docker](https://www.docker.com/)进行部署，安装时需要执行以下步骤，以centos为例。
-
+video-ocr使用[docker](https://www.docker.com/)进行部署，部署时需要执行以下步骤（以下以centos为例，其余环境下的操作类似）
 1. 安装[docker](https://docs.docker.com/engine/installation/linux/centos/)
 
 <pre>
