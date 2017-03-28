@@ -1,4 +1,4 @@
-FROM nimmis/java-centos
+FROM nimmis/java-centos:oracle-8-jdk
 MAINTAINER mengli <dream83619@gmail.com>
 
 RUN yum update -y && yum install -y ImageMagick.x86_64
