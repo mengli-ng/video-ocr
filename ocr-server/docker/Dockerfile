@@ -1,8 +1,8 @@
 FROM nimmis/java-centos:oracle-8-jdk
 MAINTAINER mengli <dream83619@gmail.com>
 
-RUN yum update -y && yum install -y ImageMagick.x86_64
-RUN yum install -y gcc gcc-c++ make autoconf automake libtool libjpeg-devel libpng-devel libtiff-devel zlib-devel unzip
+RUN yum install -y gcc gcc-c++ make autoconf automake libtool libjpeg-devel libpng-devel libtiff-devel zlib-devel unzip && yum -y clean all
+RUN yum install -y ImageMagick.x86_64  && yum -y clean all
 RUN wget http://www.leptonica.org/source/leptonica-1.72.tar.gz && \
 tar -xzvf leptonica-1.72.tar.gz && \
 cd leptonica-1.72 && \
@@ -33,6 +33,7 @@ ADD wait-for-it.sh wait-for-it.sh
 ADD video_info.sh /scripts/video_info.sh
 ADD video_transcode.sh /scripts/video_transcode.sh
 ADD video_ocr.sh /scripts/video_ocr.sh
+RUN chmod +x /usr/bin/ffmpeg /usr/bin/ffprobe /scripts/video_info.sh /scripts/video_transcode.sh /scripts/video_ocr.sh
 ADD ocr-server.jar ocr-server.jar
-RUN chmod +x /usr/bin/ffmpeg /usr/bin/ffprobe /scripts/video_info.sh /scripts/video_transcode.sh /scripts/video_ocr.sh ocr-server.jar
+RUN chmod +x ocr-server.jar
 ENTRYPOINT ["./entrypoint.sh"]
