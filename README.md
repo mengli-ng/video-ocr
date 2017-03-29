@@ -80,7 +80,8 @@ sudo systemctl restart docker
 
 <pre>
 wget https://github.com/dream83619/video-ocr/releases/download/v0.0.1/docker-compose.zip
-unzip docker-compose.zip && cd docker-compose
+unzip docker-compose.zip
+cd docker-compose
 </pre>
 
 * 启动服务
@@ -92,7 +93,7 @@ start.sh包括以下参数：
 * -h 服务器IP地址，默认为网卡1的IP地址
 * -p 服务端口号，默认为80
 
-客户端通过 http://host_port:port/ 访问服务
+客户端通过 _http://host_ip:port/_ 访问服务
 
 * 停止服务
 <pre>
