@@ -68,7 +68,7 @@ chmod +x /usr/local/bin/docker-compose
 
 3. 配置国内代理([DaoCloud](https://www.daocloud.io/mirror))
 
-从国内直接下载docker镜像的速度很慢，可以配置国内的代理加速下载
+从国内直接下载docker镜像的速度很慢，可以配置国内代理进行加速
 <pre>
 curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://33016307.m.daocloud.io
 </pre>
