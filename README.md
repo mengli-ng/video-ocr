@@ -119,7 +119,7 @@ systemctl enable video-ocr.service
 </pre>
 启动，停止，重启服务
 <pre>
-systemctl start video-ocr.service
-systemctl stop video-ocr.service
-systemctl restart video-ocr.service
+systemctl start video-ocr
+systemctl stop video-ocr
+systemctl restart video-ocr
 </pre>
