@@ -66,7 +66,7 @@ chmod +x /usr/local/bin/docker-compose
 
 3. 配置阿里云镜像加速器
 
-从国内直接下载docker的速度很慢，需要配置国内的镜像加速器
+从Docker Hub直接下载镜像的速度很慢，需要配置国内的镜像加速器
 <pre>
 sudo mkdir -p /etc/docker
 sudo vi /etc/docker/daemon.json
