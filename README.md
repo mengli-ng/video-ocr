@@ -47,9 +47,6 @@ $ sudo yum-config-manager \
 sudo yum-config-manager --enable docker-ce-edge
 </pre>
 <pre>
-sudo yum-config-manager --disable docker-ce-edge
-</pre>
-<pre>
 sudo yum makecache fast
 </pre>
 <pre>
