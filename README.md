@@ -10,8 +10,9 @@ video-ocr使用了以下框架
 * [angular-cli](http://cli.angular.io/)
 * [angular-material](https://material.angular.io/)
 
-## 发布到[Docker Hub](https://hub.docker.com/)
-更新应用程序时，需要重新发布到[Docker Hub](https://hub.docker.com/)用于应用程序的部署。
+## 发布到阿里云镜像仓库
+
+因为Docker Hub的访问速度很慢，使用了阿里云的镜像仓库
 
 * 在ocr-server中执行
 <pre>
@@ -27,12 +28,9 @@ cd docker
 ./build.sh
 </pre>
 
-发布的repository
-* [dreamcoder/video-ocr-server](https://hub.docker.com/r/dreamcoder/video-ocr-server/)
-* [dreamcoder/video-ocr-web](https://hub.docker.com/r/dreamcoder/video-ocr-web/)
-
 ## 部署
 video-ocr使用[docker](https://www.docker.com/)进行部署，部署时需要执行以下步骤（以下以centos为例，其余环境下的操作类似）
+
 1. 安装[docker](https://docs.docker.com/engine/installation/linux/centos/)
 
 <pre>
@@ -66,14 +64,23 @@ $ curl -L "https://github.com/docker/compose/releases/download/1.11.2/docker-com
 chmod +x /usr/local/bin/docker-compose
 </pre>
 
-3. 配置国内代理([DaoCloud](https://www.daocloud.io/mirror))
+3. 配置阿里云镜像加速器
 
-从国内直接下载docker镜像的速度很慢，可以配置国内代理进行加速
+从国内直接下载docker的速度很慢，需要配置国内的镜像加速器
 <pre>
-curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://33016307.m.daocloud.io
+sudo mkdir -p /etc/docker
+sudo vi /etc/docker/daemon.json
 </pre>
+输入以下内容
 <pre>
-sudo systemctl restart docker 
+{
+  "registry-mirrors": ["https://6adape9u.mirror.aliyuncs.com"]
+}
+</pre>
+重启Docker
+<pre>
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 </pre>
 
 4. 下载并运行docker-compose脚本
