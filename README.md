@@ -85,12 +85,12 @@ unzip docker-compose.zip && cd docker-compose
 
 * 启动服务
 <pre>
-./start.sh
+./start.sh -h host_ip -p 80
 </pre>
 
-start.sh支持以下参数：
-* -h _host_: 服务IP地址，默认为网卡1的IP地址
-* -p _ip_: 服务端口号，默认为80
+start.sh包括以下参数：
+* -h 服务器IP地址，默认为网卡1的IP地址
+* -p 服务端口号，默认为80
 
 客户端将通过浏览器打开 _http://host:ip/_ 访问服务
 
@@ -114,14 +114,14 @@ After=syslog.target
 
 [Service]
 User=root
-ExecStart=/path/to/start.sh
+ExecStart=/path/to/start.sh -h host_ip -p 80
 ExecStop=/path/to/stop.sh
 SuccessExitStatus=143
 
 [Install]
 WantedBy=multi-user.target
 </pre>
-需要修改 _/path/to/start.sh_ 和 _/path/to/stop.sh_ 为实际的路径
+将User, ExecStart, ExecStop修改为为实际的用户和路径
 
 启用服务
 <pre>
