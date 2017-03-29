@@ -86,14 +86,14 @@ cd docker-compose
 
 * 启动服务
 <pre>
-./start.sh -h host_ip -p 80
+./start.sh -h ip -p 80
 </pre>
 
 start.sh包括以下参数：
 * -h 服务器IP地址，默认为网卡1的IP地址
 * -p 服务端口号，默认为80
 
-客户端通过 _http://host_ip:port/_ 访问服务
+客户端通过 _http://ip:port/_ 访问服务
 
 * 停止服务
 <pre>
@@ -115,7 +115,7 @@ After=syslog.target
 
 [Service]
 User=root
-ExecStart=/path/to/start.sh -h host_ip -p 80
+ExecStart=/path/to/start.sh -h ip -p 80
 ExecStop=/path/to/stop.sh
 SuccessExitStatus=143
 
@@ -123,7 +123,6 @@ SuccessExitStatus=143
 WantedBy=multi-user.target
 </pre>
 将User, ExecStart, ExecStop修改为为实际的用户和路径
-
 启用服务
 <pre>
 systemctl enable video-ocr.service
