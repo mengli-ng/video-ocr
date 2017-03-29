@@ -72,6 +72,9 @@ chmod +x /usr/local/bin/docker-compose
 <pre>
 curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://33016307.m.daocloud.io
 </pre>
+<pre>
+sudo systemctl restart docker 
+</pre>
 
 4. 下载并运行docker-compose脚本
 
