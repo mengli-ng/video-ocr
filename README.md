@@ -79,9 +79,9 @@ sudo systemctl restart docker
 4. 下载并运行docker-compose脚本
 
 <pre>
-wget https://github.com/dream83619/video-ocr/releases/download/v0.0.1/docker-compose.zip
-unzip docker-compose.zip
-cd docker-compose
+wget https://github.com/dream83619/video-ocr/releases/download/v0.0.1/video-ocr.zip
+unzip video-ocr.zip
+cd video-ocr
 </pre>
 
 * 启动服务
