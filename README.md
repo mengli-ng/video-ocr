@@ -66,7 +66,14 @@ $ curl -L "https://github.com/docker/compose/releases/download/1.11.2/docker-com
 chmod +x /usr/local/bin/docker-compose
 </pre>
 
-3. 下载并运行docker-compose脚本
+3. 配置国内代理([DaoCloud](https://www.daocloud.io/mirror))
+
+从国内直接下载docker镜像的速度很慢，可以配置国内的代理加速下载
+<pre>
+curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://33016307.m.daocloud.io
+</pre>
+
+4. 下载并运行docker-compose脚本
 
 <pre>
 wget https://github.com/dream83619/video-ocr/releases/download/v0.0.1/docker-compose.zip
