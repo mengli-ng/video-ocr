@@ -28,7 +28,7 @@ storage:
   base-url: ${STORAGE_BASE_URL}
 
 script:
-  base-path: /scripts/
+  base-path: /
 
 task:
   output-path: /tmp
