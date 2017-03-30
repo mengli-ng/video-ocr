@@ -12,7 +12,7 @@ video-ocr使用了以下框架
 
 ## 发布到阿里云镜像仓库
 
-因为Docker Hub的访问速度很慢，使用了阿里云的镜像仓库
+国内访问Docker Hub的速度很慢，video-ocr使用了阿里云的镜像仓库
 
 * 在ocr-server中执行
 <pre>
@@ -29,6 +29,7 @@ cd docker
 </pre>
 
 ## 部署
+
 video-ocr使用[docker](https://www.docker.com/)进行部署，部署时需要执行以下步骤（以下以centos为例，其余环境下的操作类似）
 
 1. 安装[docker](https://docs.docker.com/engine/installation/linux/centos/)
@@ -91,7 +92,7 @@ unzip video-ocr.zip
 cd video-ocr
 </pre>
 
-* 启动服务
+启动服务
 <pre>
 ./start.sh -h &lt;ip&gt; -p &lt;port&gt;
 </pre>
