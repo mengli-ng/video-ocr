@@ -129,9 +129,10 @@ SuccessExitStatus=143
 WantedBy=multi-user.target
 </pre>
 将User, ExecStart修改为为实际的用户和路径
+
 启用服务
 <pre>
-systemctl enable video-ocr.service
+systemctl enable video-ocr
 </pre>
 启动服务
 <pre>
