@@ -103,7 +103,7 @@ start.sh包括以下参数：
 
 客户端将通过 _http://&lt;ip&gt;:&lt;port&gt;/_ 访问服务
 
-4. 将docker-compose脚本制作为service
+5. 将docker-compose脚本制作为service
 
 将服务制作为service，使服务以daemon方式运行，并随系统启动，通过如下方式制作service
 <pre>
