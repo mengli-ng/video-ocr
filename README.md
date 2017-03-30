@@ -93,20 +93,14 @@ cd video-ocr
 
 * 启动服务
 <pre>
-./start.sh -h ip -p 80
+./start.sh -h &lt;ip&gt; -p &lt;port&gt;
 </pre>
 
 start.sh包括以下参数：
 * -h 服务器IP地址，默认为网卡1的IP地址
 * -p 服务端口号，默认为80
 
-客户端通过 _http://ip:port/_ 访问服务
-
-* 停止服务
-<pre>
-./stop.sh
-</pre>
-
+客户端将通过 _http://&lt;ip&gt;:&lt;port&gt;/_ 访问服务
 
 4. 将docker-compose脚本制作为service
 
@@ -122,7 +116,7 @@ After=syslog.target
 
 [Service]
 User=root
-ExecStart=/path/to/start.sh -h ip -p 80
+ExecStart=/path/to/start.sh -h &lt;ip&gt; -p &lt;port&gt;
 SuccessExitStatus=143
 
 [Install]
