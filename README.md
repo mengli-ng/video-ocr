@@ -133,9 +133,11 @@ WantedBy=multi-user.target
 <pre>
 systemctl enable video-ocr.service
 </pre>
-启动，停止，重启服务
+启动服务
 <pre>
 systemctl start video-ocr
-systemctl stop video-ocr
-systemctl restart video-ocr
+</pre>
+查看服务日志
+<pre>
+journalctl -f -u video-ocr
 </pre>
