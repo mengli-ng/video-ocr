@@ -110,7 +110,7 @@ start.sh包括以下参数：
 
 4. 将docker-compose脚本制作为service
 
-将服务制作为service，使服务以daemon方式运行，并随系统自启动，通过如下方式制作service
+将服务制作为service，使服务以daemon方式运行，并随系统启动，通过如下方式制作service
 <pre>
 vi /etc/systemd/system/video-ocr.service
 </pre>
@@ -123,13 +123,12 @@ After=syslog.target
 [Service]
 User=root
 ExecStart=/path/to/start.sh -h ip -p 80
-ExecStop=/path/to/stop.sh
 SuccessExitStatus=143
 
 [Install]
 WantedBy=multi-user.target
 </pre>
-将User, ExecStart, ExecStop修改为为实际的用户和路径
+将User, ExecStart修改为为实际的用户和路径
 启用服务
 <pre>
 systemctl enable video-ocr.service
