@@ -1,5 +1,6 @@
 package xyz.dreamcoder.service;
 
+import com.google.common.base.Strings;
 import com.google.common.io.CharStreams;
 import com.google.common.io.Files;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import xyz.dreamcoder.repository.VideoRepository;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
@@ -61,9 +63,9 @@ public class VideoService {
         try {
             String inputPath = video.getFilePath();
             List<String> args = Arrays.asList("-i", inputPath);
-            BufferedReader bufferedReader = scriptService.runAndWait(SCRIPT_INFO, args, true);
 
-            video.setVideoInfo(CharStreams.toString(bufferedReader));
+            BufferedReader reader = scriptService.runAndWait(SCRIPT_INFO, args, false);
+            video.setVideoInfo(CharStreams.toString(reader));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -86,7 +88,16 @@ public class VideoService {
                     "-v", format.getVideoCodec(),
                     "-b", String.valueOf(format.getBitrate()));
 
-            scriptService.runAndWait(SCRIPT_TRANSCODE, args, true);
+            BufferedReader reader = scriptService.runAndWait(SCRIPT_TRANSCODE, args, false);
+
+            try {
+                String error = CharStreams.toString(reader);
+                if (!Strings.isNullOrEmpty(error)) {
+                    throw new IllegalStateException(error);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
             if (name.equals("browse")) {
                 video.setBrowseFileUrl(outputPath);

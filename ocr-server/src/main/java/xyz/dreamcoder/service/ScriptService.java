@@ -23,27 +23,31 @@ public class ScriptService {
         this.properties = properties;
     }
 
-    public BufferedReader runAndWait(String scriptName, List<String> args, boolean catchError) {
+    public BufferedReader runAndWait(String scriptName, List<String> args, boolean showOutput) {
 
         List<String> commands = new ArrayList<>();
         commands.add(Paths.get(properties.getBasePath(), scriptName).toString());
         commands.addAll(args);
 
         try {
-            ProcessBuilder processBuilder = new ProcessBuilder(commands);
-            Process process = processBuilder.start();
-            process.waitFor();
+            System.out.println(String.join(" ", commands));
 
-            if (catchError) {
-                String error = CharStreams.toString(new InputStreamReader(process.getErrorStream(), "utf-8"));
-                if (!Strings.isNullOrEmpty(error)) {
-                    throw new IllegalStateException(error);
+            ProcessBuilder processBuilder = new ProcessBuilder(commands);
+            processBuilder.redirectErrorStream(true);
+
+            Process process = processBuilder.start();
+
+            if (showOutput) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
                 }
             }
 
-            return new BufferedReader(new InputStreamReader(process.getInputStream(), "utf-8"));
+            return new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-        } catch (InterruptedException | IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

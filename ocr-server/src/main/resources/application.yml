@@ -50,7 +50,7 @@ storage:
   base-url: http://localhost:9003/
 
 script:
-  base-path: /Users/mengli/Work/MyProjects/video_ocr/ocr-server/src/main/scripts/
+  base-path: /Users/mengli/Work/MyProjects/video-ocr/ocr-server/src/main/scripts/
 
 task:
   output-path: /Users/mengli/Temp/docker-test-web/
@@ -72,13 +72,20 @@ script:
 
 task:
   output-path: /tmp/ocr-task/
+
 ---
+server:
+  context-path: /ocr-server
+
 spring:
   profiles: aliyun-lingpan
   datasource:
     url: jdbc:mysql://localhost/video_ocr?characterEncoding=utf-8&useSSL=false
     username: root
     password: cdvcloud
+  jpa:
+    generate-ddl: true
+
 
 storage:
   base-path: /usr/local/nginx/html/
@@ -89,3 +96,6 @@ script:
 
 task:
   output-path: /tmp/ocr-task/
+
+flyway:
+  enabled: false

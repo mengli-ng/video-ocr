@@ -78,7 +78,7 @@ public class TaskService {
                 "-t", String.valueOf(properties.getThreads())
         );
 
-        scriptService.runAndWait(SCRIPT_VIDEO_OCR, commands, false);
+        scriptService.runAndWait(SCRIPT_VIDEO_OCR, commands, true);
     }
 
     private void parseTaskResults(Task task, String outputPath) {
