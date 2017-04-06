@@ -17,17 +17,30 @@ done
 
 ocr () {
     file=$1
+
     # 从图片中截取文字区域
-    crop_file="${file%.*}_crop.jpg"
-    convert ${file} -crop ${w}x${h}+${x}+${y} ${crop_file}
+    source=${file}
+    dest="${file%.*}_convert_1.jpg"
+    convert ${source} -crop ${w}x${h}+${x}+${y} ${dest}
 
     # 将图片二值化处理
-    threshold_file="${file%.*}_threshold.jpg"
-    convert -scale 150% -compress none -depth 8 -alpha off -monochrome ${crop_file} ${threshold_file}
+    source=${dest}
+    dest="${file%.*}_convert_2.jpg"
+    convert ${source} -scale 150% -compress none -depth 8 -alpha off -monochrome ${dest}
+
+    # 边缘突出显示
+    source=${dest}
+    dest="${file%.*}_convert_3.jpg"
+    convert ${source} -edge 5 ${dest}
+
+    # 过滤背景色（保留白色）
+    source=${dest}
+    dest="${file%.*}_convert_4.jpg"
+    convert ${source} -alpha set -channel RGBA -fuzz 20% -fill "rgb(0,0,0)" +opaque "rgb(255,255,255)" ${dest}
 
     # 字幕识别
-    result_file="${file%.*}"
-    tesseract ${threshold_file} ${result_file} -l ${language}
+    result="${file%.*}"
+    tesseract ${file} ${result} -l ${language}
 }
 
 mkdir -p ${output}
@@ -35,7 +48,7 @@ ffmpeg -i ${input} -vf fps=1 "${output}/%5d.jpg"
 
 for file in `find ${output} -name '*.jpg'`; do
     while [[ `jobs | wc -l` -gt ${threads} ]]; do
-        sleep 5
+        sleep 1
     done
     ocr ${file} &
 done
