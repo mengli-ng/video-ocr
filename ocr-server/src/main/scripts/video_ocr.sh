@@ -18,29 +18,19 @@ done
 ocr () {
     file=$1
 
-    # 从图片中截取文字区域
-    source=${file}
-    dest="${file%.*}_convert_1.jpg"
-    convert ${source} -crop ${w}x${h}+${x}+${y} ${dest}
-
-    # 将图片二值化处理
-    source=${dest}
-    dest="${file%.*}_convert_2.jpg"
-    convert ${source} -scale 150% -compress none -depth 8 -alpha off -monochrome ${dest}
-
-    # 边缘突出显示
-    source=${dest}
-    dest="${file%.*}_convert_3.jpg"
-    convert ${source} -edge 5 ${dest}
-
-    # 过滤背景色（保留白色）
-    source=${dest}
-    dest="${file%.*}_convert_4.jpg"
-    convert ${source} -alpha set -channel RGBA -fuzz 20% -fill "rgb(0,0,0)" +opaque "rgb(255,255,255)" ${dest}
+    # 处理原始图片
+    # 1. 从图片中截取文字区域
+    # 2. 将图片二值化处理
+    # 3. 边缘突出显示
+    # 4. 过滤背景色（保留白色）
+    mogrify -crop ${w}x${h}+${x}+${y} ${file}
+    mogrify -scale 150% -compress none -depth 8 -alpha off -monochrome ${file}
+    mogrify -edge 5 ${file}
+    mogrify -alpha set -channel RGBA -fuzz 20% -fill "rgb(0,0,0)" +opaque "rgb(255,255,255)" ${file}
 
     # 字幕识别
-    result="${file%.*}"
-    tesseract ${file} ${result} -l ${language}
+    result_file="${file%.*}"
+    tesseract ${file} ${result_file} -l ${language}
 }
 
 mkdir -p ${output}
