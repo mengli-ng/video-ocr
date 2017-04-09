@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -90,7 +91,7 @@ public class TaskService {
         }
 
         final String[] lastText = {""};
-        Stream.of(txtFiles).forEach(txtFile -> {
+        Stream.of(txtFiles).sorted(Comparator.comparing(File::getName)).forEach(txtFile -> {
             try {
                 String fileName = com.google.common.io.Files.getNameWithoutExtension(txtFile.getName());
                 int position = (Integer.parseInt(fileName) - 1) * 1000; // milliseconds
@@ -99,15 +100,17 @@ public class TaskService {
                         .replace("\n", "")
                         .trim();
 
-                if (!Strings.isNullOrEmpty(text) && !text.equals(lastText[0])) {
-                    TaskResult result = new TaskResult();
-                    result.setPosition(position);
-                    result.setText(text);
-
-                    task.getResults().add(result);
+                if (!Strings.isNullOrEmpty(text)) {
+                    if (!text.equals(lastText[0])) {
+                        TaskResult result = new TaskResult();
+                        result.setPosition(position);
+                        result.setText(text);
+                        task.getResults().add(result);
+                    } else {
+                        task.getResults().get(task.getResults().size() - 1).setPosition(position);
+                    }
+                    lastText[0] = text;
                 }
-                lastText[0] = text;
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

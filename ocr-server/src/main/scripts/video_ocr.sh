@@ -18,17 +18,19 @@ done
 ocr () {
     file=$1
 
-    # 处理原始图片
-    # 1. 截取字幕区域
-    # 2. 过滤背景色（保留白色）
-    # 3. 边缘突出显示
-    mogrify -crop ${w}x${h}+${x}+${y} ${file}
-    mogrify -alpha set -channel RGBA -fuzz 20% -fill "rgb(0,0,0)" +opaque "rgb(255,255,255)" ${file}
-    mogrify -scale 150% -edge 5 ${file}
+    # 从图片中截取文字区域
+    source=${file}
+    dest="${file%.*}_convert_1.jpg"
+    convert ${source} -crop ${w}x${h}+${x}+${y} ${dest}
+
+    # 过滤背景色（保留白色）
+    source=${dest}
+    dest="${file%.*}_convert_2.jpg"
+    convert ${source} -alpha set -channel RGBA -fuzz 20% -fill "rgb(0,0,0)" +opaque "rgb(255,255,255)" ${dest}
 
     # 字幕识别
     result="${file%.*}"
-    tesseract ${file} ${result} -l ${language}
+    tesseract ${dest} ${result} -l ${language}
 }
 
 mkdir -p ${output}
