@@ -35,7 +35,7 @@ export class UploadVideoDialogComponent implements OnInit {
 
     this.resumable.assignBrowse(this.elementRef.nativeElement.querySelectorAll('.btn-browse'));
     Array.from((<HTMLElement>this.elementRef.nativeElement).querySelectorAll('input[type=file]')).forEach(file => {
-      file.setAttribute('accept', '.avi,.divx,.3gp,.mov,.mpeg,.mpg,.xvid,.flv,.asf,.rm,.dat,.mp4,.vob,.mkv,.wmv,.rmvb,video/*');
+      file.setAttribute('accept', '.avi,.divx,.3gp,.mov,.mpeg,.mpg,.xvid,.flv,.asf,.rm,.dat,.mp4,.vob,.mkv,.wmv,.rmvb,.ts,video/*');
     });
 
     this.resumable.on('fileAdded', file => {

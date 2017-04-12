@@ -135,3 +135,7 @@ td a.disabled {
 .loaded #loader-wrapper {
   visibility: hidden;
 }
+
+.mat-dialog-content {
+  max-height: 100vh !important;
+}
