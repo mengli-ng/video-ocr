@@ -34,6 +34,9 @@ task:
   output-path: /tmp
   threads: 10
 
+activation:
+  code-path: /tmp/activation_code
+
 ---
 spring:
   profiles: dev
