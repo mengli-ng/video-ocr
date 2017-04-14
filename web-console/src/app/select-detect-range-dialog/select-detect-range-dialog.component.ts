@@ -60,16 +60,16 @@ export class SelectDetectRegionDialogComponent implements OnInit, AfterViewInit 
     // draw events
     drawCanvas.addEventListener('mousedown', (e) => {
       let canvasRect = drawCanvas.getBoundingClientRect();
-      this.drawRect.startX = e.pageX - canvasRect.left;
-      this.drawRect.startY = e.pageY - canvasRect.top;
+      this.drawRect.startX = e.clientX - canvasRect.left;
+      this.drawRect.startY = e.clientY - canvasRect.top;
       this.painting = true;
     });
 
     drawCanvas.addEventListener('mousemove', (e) => {
       if (this.painting) {
         let canvasRect = drawCanvas.getBoundingClientRect();
-        this.drawRect.width = (e.pageX - canvasRect.left) - this.drawRect.startX;
-        this.drawRect.height = (e.pageY - canvasRect.top) - this.drawRect.startY;
+        this.drawRect.width = (e.clientX - canvasRect.left) - this.drawRect.startX;
+        this.drawRect.height = (e.clientY - canvasRect.top) - this.drawRect.startY;
         this.drawContext.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
         this.drawContext.strokeRect(this.drawRect.startX, this.drawRect.startY, this.drawRect.width, this.drawRect.height);
       }
