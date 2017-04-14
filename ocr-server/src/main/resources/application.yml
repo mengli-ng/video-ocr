@@ -35,7 +35,7 @@ task:
   threads: 10
 
 activation:
-  code-path: /tmp/activation_code
+  code-path: /activation/activation_code
 
 ---
 spring:
@@ -58,6 +58,9 @@ script:
 task:
   output-path: /Users/mengli/Temp/docker-test-web/
 
+activation:
+  code-path: /tmp/activation_code
+
 ---
 spring:
   profiles: aliyun
@@ -75,6 +78,9 @@ script:
 
 task:
   output-path: /tmp/ocr-task/
+
+activation:
+  code-path: /tmp/activation_code
 
 ---
 server:
@@ -102,3 +108,6 @@ task:
 
 flyway:
   enabled: false
+
+activation:
+  code-path: /tmp/activation_code

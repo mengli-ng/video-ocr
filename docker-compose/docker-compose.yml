@@ -7,18 +7,19 @@ services:
     networks:
       - video-ocr-network
     volumes:
-      - "/var/video-ocr/mysql:/var/lib/mysql"
+      - "${HOST_VOLUME}/mysql:/var/lib/mysql"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
   server:
-    image: registry.cn-beijing.aliyuncs.com/dreamcoder/video-ocr-server
+    image: registry.cn-beijing.aliyuncs.com/dreamcoder/video-ocr-server:latest
     ports:
       - "8080"
     networks:
       - video-ocr-network
     volumes:
-      - "/var/video-ocr/storage:/storage"
+      - "${HOST_VOLUME}/storage:/storage"
+      - "${HOST_VOLUME}/activation:/activation"
     environment:
       SERVER_CONTEXT_PATH: ${SERVER_CONTEXT_PATH}
       MYSQL_HOST_NAME: db
@@ -29,13 +30,13 @@ services:
     depends_on:
       - db
   web:
-    image: registry.cn-beijing.aliyuncs.com/dreamcoder/video-ocr-web
+    image: registry.cn-beijing.aliyuncs.com/dreamcoder/video-ocr-web:latest
     ports:
       - "${HOST_PORT}:80"
     networks:
       - video-ocr-network
     volumes:
-      - "/var/video-ocr/storage:/usr/share/nginx/html/storage"
+      - "${HOST_VOLUME}/storage:/usr/share/nginx/html/storage"
     depends_on:
       - server
 
