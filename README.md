@@ -91,6 +91,7 @@ mkdir /usr/local/video-ocr
 cd /usr/local/video-ocr
 wget https://raw.githubusercontent.com/dream83619/video-ocr/master/docker-compose/docker-compose.yml
 wget https://raw.githubusercontent.com/dream83619/video-ocr/master/docker-compose/start.sh
+chmod +x start.sh
 </pre>
 
 启动服务
