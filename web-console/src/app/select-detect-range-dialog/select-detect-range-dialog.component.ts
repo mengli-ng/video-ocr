@@ -51,7 +51,7 @@ export class SelectDetectRegionDialogComponent implements OnInit, AfterViewInit 
 
     this.drawContext = drawCanvas.getContext('2d');
     this.drawContext.strokeStyle = "red";
-    this.drawContext.lineWidth = 2;
+    this.drawContext.lineWidth = 1;
 
     this.bgContext = bgCanvas.getContext('2d');
     this.bgContext.scale(scale, scale);
