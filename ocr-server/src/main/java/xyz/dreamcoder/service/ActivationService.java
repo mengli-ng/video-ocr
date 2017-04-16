@@ -56,8 +56,6 @@ public class ActivationService {
 
         // get activation code
         Path codePath = Paths.get(properties.getCodePath());
-        System.out.println(codePath);
-        System.out.println(Files.exists(codePath));
         if (!Files.exists(codePath)) {
             throw new RuntimeException("Activation code is not exist.");
         }
