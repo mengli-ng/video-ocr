@@ -87,9 +87,10 @@ sudo systemctl restart docker
 4. 下载并运行docker-compose脚本
 
 <pre>
-wget https://github.com/dream83619/video-ocr/releases/download/v0.0.1/video-ocr.zip
-unzip video-ocr.zip
-cd video-ocr
+mkdir /usr/local/video-ocr
+cd /usr/local/video-ocr
+wget https://raw.githubusercontent.com/dream83619/video-ocr/master/docker-compose/docker-compose.yml
+wget https://raw.githubusercontent.com/dream83619/video-ocr/master/docker-compose/start.sh
 </pre>
 
 启动服务
@@ -137,3 +138,19 @@ systemctl start video-ocr
 <pre>
 journalctl -f -u video-ocr
 </pre>
+
+6. 授权
+
+第一次启动服务会因为没有授权而失败，在日志中会显示如下错误信息：
+<pre>
+*************************************************
+                                                 
+             VERIFICATION ERROR!!!               
+                                                 
+     MACHINE IDENTIFIER: &lt;machine_identifier&gt;                      
+                                                 
+*************************************************
+</pre>
+
+拷贝&lt;machine_identifier&gt;中的值并生成授权码文件，
+将授权码文件`activation_code`拷贝到`/var/video-ocr/activation`目录中，重新启动服务即可完成授权。
