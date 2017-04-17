@@ -26,7 +26,7 @@ ocr () {
     # 过滤背景色（保留白色）
     source=${dest}
     dest="${file%.*}_convert_2.jpg"
-    convert ${source} -alpha set -channel RGBA -fuzz 20% -fill "rgb(0,0,0)" +opaque "rgb(255,255,255)" ${dest}
+    convert ${source} -alpha set -channel RGBA -fuzz 35% -fill "rgb(0,0,0)" +opaque "rgb(255,255,255)" ${dest}
 
     # 字幕识别
     result="${file%.*}"
