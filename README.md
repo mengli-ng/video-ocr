@@ -52,6 +52,9 @@ sudo yum makecache fast
 sudo yum install docker-ce
 </pre>
 <pre>
+sudo systemctl enable docker
+</pre>
+<pre>
 sudo systemctl start docker
 </pre>
 
@@ -115,7 +118,8 @@ vi /etc/systemd/system/video-ocr.service
 <pre>
 [Unit]
 Description=video-ocr
-After=syslog.target
+Requires=docker.service
+After=syslog.target network.target docker.service
 
 [Service]
 User=root
