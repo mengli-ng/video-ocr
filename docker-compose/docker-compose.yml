@@ -17,6 +17,7 @@ services:
       - "8080"
     networks:
       - video-ocr-network
+    mac_address: ${HOST_MAC_ADDRESS}
     volumes:
       - "${HOST_VOLUME}/storage:/storage"
       - "${HOST_VOLUME}/activation:/activation"
