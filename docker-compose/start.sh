@@ -24,7 +24,7 @@ if [ -z "$volume" ]; then
 fi
 
 if [ -z "$mac" ]; then
-    mac=`cat /sys/class/net/eth0/address`
+    mac=`cat /sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address`
 fi
 
 echo "video-ocr starting at ${host}:${port}"
