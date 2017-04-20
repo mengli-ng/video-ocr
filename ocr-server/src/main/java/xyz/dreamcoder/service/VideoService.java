@@ -11,7 +11,6 @@ import xyz.dreamcoder.repository.VideoRepository;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
@@ -57,6 +56,13 @@ public class VideoService {
                 updateStatus(video, VideoStatus.TRANSCODE_FAILED);
             }
         });
+    }
+
+    public void deleteVideo(Video video) {
+        // delete files of video
+        deleteFile(video.getFilePath());
+        deleteFile(video.getBrowseFilePath());
+        deleteFile(video.getThumbnailFilePath());
     }
 
     private void getVideoInfo(Video video) {
@@ -109,5 +115,15 @@ public class VideoService {
     private void updateStatus(Video video, VideoStatus status) {
         video.setStatus(status);
         videoRepository.save(video);
+    }
+
+    private void deleteFile(String path) {
+        try {
+            if (java.nio.file.Files.exists(Paths.get(path))) {
+                java.nio.file.Files.delete(Paths.get(path));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

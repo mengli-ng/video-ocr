@@ -1,7 +1,6 @@
 package xyz.dreamcoder.controller;
 
 import com.google.common.base.Strings;
-import xyz.fastcode.commons.jpa.specification.SpecificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +17,7 @@ import xyz.dreamcoder.model.VideoStatus;
 import xyz.dreamcoder.repository.VideoRepository;
 import xyz.dreamcoder.service.StorageService;
 import xyz.dreamcoder.service.VideoService;
+import xyz.fastcode.commons.jpa.specification.SpecificationBuilder;
 
 import java.io.IOException;
 import java.util.Date;
@@ -94,7 +94,12 @@ public class VideoController {
 
     @DeleteMapping("/videos/{videoId}")
     public ResponseEntity<?> deleteVideo(@PathVariable long videoId) {
-        videoRepository.delete(videoId);
+
+        Video video = videoRepository.findOne(videoId);
+
+        videoService.deleteVideo(video);
+        videoRepository.delete(video);
+
         return ResponseEntity.noContent().build();
     }
 
