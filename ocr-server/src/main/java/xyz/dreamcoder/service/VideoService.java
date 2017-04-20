@@ -106,7 +106,7 @@ public class VideoService {
             }
 
             if (name.equals("browse")) {
-                video.setBrowseFileUrl(outputPath);
+                video.setBrowseFilePath(outputPath);
                 video.setBrowseFileUrl(storageService.getFileUrl(outputPath));
             }
         });
@@ -122,7 +122,7 @@ public class VideoService {
             if (java.nio.file.Files.exists(Paths.get(path))) {
                 java.nio.file.Files.delete(Paths.get(path));
             }
-        } catch (IOException e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }
