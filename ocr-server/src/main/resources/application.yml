@@ -32,6 +32,7 @@ script:
 
 task:
   output-path: /tmp
+  file-encoding: utf-16
   threads: 10
 
 activation:

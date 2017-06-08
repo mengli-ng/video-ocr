@@ -95,7 +95,7 @@ public class TaskService {
             try {
                 String fileName = com.google.common.io.Files.getNameWithoutExtension(txtFile.getName());
                 int position = (Integer.parseInt(fileName) - 1) * 1000; // milliseconds
-                String text = FileUtils.readFileToString(txtFile, "utf-8")
+                String text = FileUtils.readFileToString(txtFile, properties.getFileEncoding())
                         .replace("\r\n", "")
                         .replace("\n", "")
                         .trim();

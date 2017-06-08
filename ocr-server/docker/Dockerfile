@@ -28,5 +28,7 @@ mkdir ffmpeg-git-64bit-static && tar -xvJf ffmpeg-git-64bit-static.tar.xz -C ffm
 cd ffmpeg-git-64bit-static && mv ffmpeg ffprobe /usr/bin && \
 cd .. && rm -f ffmpeg-git-64bit-static.tar.xz && rm -rf ffmpeg-git-64bit-static
 
+ADD wentong /wentong/
 COPY entrypoint.sh wait-for-it.sh video_info.sh video_transcode.sh video_ocr.sh ocr-server.jar /
+
 ENTRYPOINT ["/entrypoint.sh"]

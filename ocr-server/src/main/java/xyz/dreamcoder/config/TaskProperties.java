@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class TaskProperties {
 
     private String outputPath;
+    private String fileEncoding = "utf-8";
     private int threads = 1;
 
     public String getOutputPath() {
@@ -16,6 +17,14 @@ public class TaskProperties {
 
     public void setOutputPath(String outputPath) {
         this.outputPath = outputPath;
+    }
+
+    public String getFileEncoding() {
+        return fileEncoding;
+    }
+
+    public void setFileEncoding(String fileEncoding) {
+        this.fileEncoding = fileEncoding;
     }
 
     public int getThreads() {

@@ -1,7 +1,5 @@
 package xyz.dreamcoder.service;
 
-import com.google.common.base.Strings;
-import com.google.common.io.CharStreams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.dreamcoder.config.ScriptProperties;
@@ -12,6 +10,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 @Service
 public class ScriptService {
@@ -38,10 +37,21 @@ public class ScriptService {
             Process process = processBuilder.start();
 
             if (showOutput) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
+                Executors.newSingleThreadExecutor().execute(() -> {
+                    try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            System.out.println(line);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                try {
+                    process.waitFor();
+                    return null;
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
             }
 
