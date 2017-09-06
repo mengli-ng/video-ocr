@@ -24,6 +24,6 @@ public class Application implements InitializingBean {
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		activationService.verify();
+//		activationService.verify();
 	}
 }

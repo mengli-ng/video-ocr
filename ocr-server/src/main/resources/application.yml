@@ -54,7 +54,7 @@ storage:
   base-url: http://localhost:9003/
 
 script:
-  base-path: /Users/mengli/Work/MyProjects/video-ocr/ocr-server/src/main/scripts/
+  base-path: /Users/mengli/Work/MyProjects/video-ocr/ocr-server/docker/
 
 task:
   output-path: /Users/mengli/Temp/docker-test-web/
