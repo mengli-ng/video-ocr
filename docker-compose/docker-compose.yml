@@ -12,7 +12,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
   server:
-    image: registry.cn-beijing.aliyuncs.com/dreamcoder/video-ocr-server:latest
+    image: registry.cn-beijing.aliyuncs.com/mengli/video-ocr-server/tesseract-ocr
     ports:
       - "8080"
     networks:
@@ -31,7 +31,7 @@ services:
     depends_on:
       - db
   web:
-    image: registry.cn-beijing.aliyuncs.com/dreamcoder/video-ocr-web:latest
+    image: registry.cn-beijing.aliyuncs.com/mengli/video-ocr-web/tesseract-ocr
     ports:
       - "${HOST_PORT}:80"
     networks:
