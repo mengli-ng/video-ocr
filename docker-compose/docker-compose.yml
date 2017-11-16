@@ -7,10 +7,10 @@ services:
     networks:
       - video-ocr-network
     volumes:
-      - "${HOST_VOLUME}/mysql:/var/lib/mysql"
+      - "/var/lib/mysql:/var/lib/mysql"
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: video_ocr
     deploy:
       resources:
         limits:
@@ -21,17 +21,15 @@ services:
       - "8080"
     networks:
       - video-ocr-network
-    mac_address: ${HOST_MAC_ADDRESS}
     volumes:
-      - "${HOST_VOLUME}/storage:/storage"
-      - "${HOST_VOLUME}/activation:/activation"
+      - "/var/lib/video-ocr/storage:/storage"
     environment:
-      SERVER_CONTEXT_PATH: ${SERVER_CONTEXT_PATH}
+      SERVER_CONTEXT_PATH: /ocr-server
       MYSQL_HOST_NAME: db
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: video_ocr
+      MYSQL_ROOT_PASSWORD: password
       STORAGE_BASE_PATH: /storage
-      STORAGE_BASE_URL: http://${HOST_NAME}:${HOST_PORT}/storage
+      STORAGE_BASE_URL: http://${HOST_IP_ADDRESS}/storage
     deploy:
       resources:
         limits:
@@ -47,7 +45,7 @@ services:
     networks:
       - video-ocr-network
     volumes:
-      - "${HOST_VOLUME}/storage:/usr/share/nginx/html/storage"
+      - "/var/lib/video-ocr/storage:/usr/share/nginx/html/storage"
     deploy:
       resources:
         limits:
