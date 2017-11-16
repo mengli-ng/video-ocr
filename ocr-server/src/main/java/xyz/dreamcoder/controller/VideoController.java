@@ -11,21 +11,21 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import xyz.dreamcoder.minicommons.jpa.specification.SpecificationBuilder;
 import xyz.dreamcoder.model.CreateVideoRequest;
 import xyz.dreamcoder.model.Video;
 import xyz.dreamcoder.model.VideoStatus;
 import xyz.dreamcoder.repository.VideoRepository;
 import xyz.dreamcoder.service.StorageService;
 import xyz.dreamcoder.service.VideoService;
-import xyz.fastcode.commons.jpa.specification.SpecificationBuilder;
 
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static xyz.fastcode.commons.jpa.specification.SpecificationBuilder.equalTo;
-import static xyz.fastcode.commons.jpa.specification.SpecificationBuilder.like;
+import static xyz.dreamcoder.minicommons.jpa.specification.SpecificationBuilder.equalTo;
+import static xyz.dreamcoder.minicommons.jpa.specification.SpecificationBuilder.like;
 
 @RestController
 @RequestMapping

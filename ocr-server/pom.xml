@@ -44,8 +44,8 @@
 			<version>0.6.1</version>
 		</dependency>
 		<dependency>
-			<groupId>xyz.fastcode</groupId>
-			<artifactId>fastcode-commons-jpa</artifactId>
+			<groupId>xyz.dreamcoder</groupId>
+			<artifactId>minicommons-jpa</artifactId>
 			<version>0.0.1-RELEASE</version>
 		</dependency>
 		<dependency>

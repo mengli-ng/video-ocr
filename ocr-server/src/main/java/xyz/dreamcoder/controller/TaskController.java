@@ -1,7 +1,6 @@
 package xyz.dreamcoder.controller;
 
 import com.google.common.base.Strings;
-import xyz.fastcode.commons.jpa.specification.SpecificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import xyz.dreamcoder.minicommons.jpa.specification.SpecificationBuilder;
 import xyz.dreamcoder.model.*;
 import xyz.dreamcoder.repository.TaskRepository;
 import xyz.dreamcoder.repository.TaskResultRepository;
@@ -21,7 +21,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
 
-import static xyz.fastcode.commons.jpa.specification.SpecificationBuilder.like;
+import static xyz.dreamcoder.minicommons.jpa.specification.SpecificationBuilder.like;
 
 @RestController
 public class TaskController {
