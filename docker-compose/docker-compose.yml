@@ -11,6 +11,11 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 300M
   server:
     image: registry.cn-beijing.aliyuncs.com/mengli/video-ocr-server_tesseract-ocr
     ports:
@@ -28,6 +33,11 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       STORAGE_BASE_PATH: /storage
       STORAGE_BASE_URL: http://${HOST_NAME}:${HOST_PORT}/storage
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 500M
     depends_on:
       - db
   web:
