@@ -30,12 +30,6 @@ services:
       MYSQL_ROOT_PASSWORD: password
       STORAGE_BASE_PATH: /storage
       STORAGE_BASE_URL: http://${HOST_IP_ADDRESS}/storage
-    deploy:
-      resources:
-        limits:
-          memory: 2048M
-        reservations:
-          memory: 2000M
     depends_on:
       - db
   web:
