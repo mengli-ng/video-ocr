@@ -11,10 +11,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: video_ocr
-    deploy:
-      resources:
-        limits:
-          memory: 200M
   server:
     image: registry.cn-beijing.aliyuncs.com/mengli/video-ocr-server_tesseract-ocr
     ports:
@@ -30,6 +26,10 @@ services:
       MYSQL_ROOT_PASSWORD: password
       STORAGE_BASE_PATH: /storage
       STORAGE_BASE_URL: http://${HOST_IP_ADDRESS}/storage
+      BAIDU_CLIENT_ID: ${BAIDU_CLIENT_ID}
+      BAIDU_CLIENT_SECRET: ${BAIDU_CLIENT_SECRET}
+      BAIDU_OCR_URL: ${BAIDU_OCR_URL}
+      BAIDU_OCR_ASYNC: ${BAIDU_OCR_ASYNC}
     depends_on:
       - db
   web:
@@ -39,11 +39,7 @@ services:
     networks:
       - video-ocr-network
     volumes:
-      - "/var/lib/video-ocr/storage:/usr/share/nginx/html/storage"
-    deploy:
-      resources:
-        limits:
-          memory: 200M    
+      - "/var/lib/video-ocr/storage:/usr/share/nginx/html/storage" 
     depends_on:
       - server
 

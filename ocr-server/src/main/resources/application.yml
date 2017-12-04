@@ -15,6 +15,15 @@ flyway:
   enabled: true
   validate-on-migrate: false
 
+feign:
+  hystrix:
+    enabled: true
+
+hystrix:
+  command.default.execution.timeout.enabled: false
+  threadpool.default.maxQueueSize: 2147483647
+  threadpool.default.queueSizeRejectionThreshold: 2147483647
+
 transcode:
   formats:
     browse:
@@ -32,7 +41,13 @@ script:
 
 task:
   output-path: /tmp
-  threads: 10
+  baidu-client-id: ${BAIDU_CLIENT_ID}
+  baidu-client-secret: ${BAIDU_CLIENT_SECRET}
+  baidu-ocr-async: ${BAIDU_OCR_ASYNC:false}
+
+baidu:
+  ocr:
+    url: ${BAIDU_OCR_URL:/rest/2.0/ocr/v1/webimage}
 
 activation:
   code-path: /activation/activation_code

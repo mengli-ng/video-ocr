@@ -1,9 +1,13 @@
 package xyz.dreamcoder.service;
 
 import com.google.common.base.Strings;
+import com.google.common.io.BaseEncoding;
 import org.apache.commons.io.FileUtils;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import xyz.dreamcoder.client.BaiduAccessToken;
+import xyz.dreamcoder.client.BaiduBCEClient;
+import xyz.dreamcoder.client.OCRResult;
 import xyz.dreamcoder.config.TaskProperties;
 import xyz.dreamcoder.model.*;
 import xyz.dreamcoder.repository.TaskRepository;
@@ -11,26 +15,29 @@ import xyz.dreamcoder.repository.TaskRepository;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
 public class TaskService {
 
-    private static final String SCRIPT_VIDEO_OCR = "video_ocr.sh";
+    private static final String SCRIPT_VIDEO_TO_IMAGES = "video_to_images.sh";
 
     private final ScriptService scriptService;
     private final TaskProperties properties;
     private final TaskRepository taskRepository;
+    private final BaiduBCEClient baiduBCEClient;
 
-    public TaskService(ScriptService scriptService, TaskProperties properties, TaskRepository taskRepository) {
+    public TaskService(ScriptService scriptService, TaskProperties properties, TaskRepository taskRepository,
+                       BaiduBCEClient baiduBCEClient) {
+
         this.scriptService = scriptService;
         this.properties = properties;
         this.taskRepository = taskRepository;
+        this.baiduBCEClient = baiduBCEClient;
     }
 
     @Async
@@ -40,7 +47,8 @@ public class TaskService {
         try {
             String outputPath = createOutputPath();
 
-            executeOCR(video, task, outputPath);
+            videoToImages(video, task, outputPath);
+            executeBaiduOCR(outputPath);
             parseTaskResults(task, outputPath);
             updateStatus(task, TaskStatus.FINISHED);
 
@@ -64,7 +72,7 @@ public class TaskService {
         }
     }
 
-    private void executeOCR(Video video, Task task, String outputPath) {
+    private void videoToImages(Video video, Task task, String outputPath) {
 
         VideoInfo videoInfo = video.getParsedVideoInfo();
 
@@ -74,12 +82,72 @@ public class TaskService {
                 "-x", String.valueOf(task.getDetectLeft() * videoInfo.getVideoWidth()),
                 "-y", String.valueOf(task.getDetectTop() * videoInfo.getVideoHeight()),
                 "-w", String.valueOf(task.getDetectWidth() * videoInfo.getVideoWidth()),
-                "-h", String.valueOf(task.getDetectHeight() * videoInfo.getVideoHeight()),
-                "-l", task.getLanguage(),
-                "-t", String.valueOf(properties.getThreads())
+                "-h", String.valueOf(task.getDetectHeight() * videoInfo.getVideoHeight())
         );
 
-        scriptService.runAndWait(SCRIPT_VIDEO_OCR, commands, true);
+        scriptService.runAndWait(SCRIPT_VIDEO_TO_IMAGES, commands, true);
+    }
+
+    private void executeBaiduOCR(String outputPath) {
+
+        BaiduAccessToken token = baiduBCEClient.getAccessToken(
+                properties.getBaiduClientId(), properties.getBaiduClientSecret());
+
+        System.out.println(token.getAccessToken());
+
+        try {
+            Files.list(Paths.get(outputPath))
+                    .filter(path -> path.toString().endsWith(".jpg"))
+                    .forEach(image -> {
+                        try {
+                            String imageBase64 = BaseEncoding.base64().encode(Files.readAllBytes(image));
+
+                            Map<String, String> parameters = new HashMap<>();
+                            parameters.put("access_token", token.getAccessToken());
+                            parameters.put("image", imageBase64);
+
+                            if (properties.isBaiduOcrAsync()) {
+                                baiduBCEClient.accurateBasicOCR(parameters).observe()
+                                        .subscribe(result -> {
+                                            parseResult(image, result);
+
+                                        }, Throwable::printStackTrace);
+
+                                // wait a moment to send next request.
+                                Thread.sleep(10);
+                            } else {
+                                OCRResult result = baiduBCEClient.accurateBasicOCR(parameters).execute();
+                                parseResult(image, result);
+                            }
+
+                        } catch (IOException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private static void parseResult(Path image, OCRResult result) {
+
+        if (!Strings.isNullOrEmpty(result.getErrorMessage())) {
+            throw new IllegalStateException(result.getErrorMessage());
+        }
+
+        String resultText = result.getWordsResult().stream()
+                .map(OCRResult.Result::getWords)
+                .collect(Collectors.joining(" "));
+
+        Path resultPath = Paths.get(image.getParent().toString(),
+                com.google.common.io.Files.getNameWithoutExtension(String.valueOf(image)) + ".txt");
+        try {
+            Files.write(resultPath, resultText.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void parseTaskResults(Task task, String outputPath) {

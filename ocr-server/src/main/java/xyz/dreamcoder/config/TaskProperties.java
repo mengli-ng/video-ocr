@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 public class TaskProperties {
 
     private String outputPath;
-    private int threads = 1;
+    private String baiduClientId;
+    private String baiduClientSecret;
+    private boolean baiduOcrAsync;
 
     public String getOutputPath() {
         return outputPath;
@@ -18,11 +20,27 @@ public class TaskProperties {
         this.outputPath = outputPath;
     }
 
-    public int getThreads() {
-        return threads;
+    public String getBaiduClientId() {
+        return baiduClientId;
     }
 
-    public void setThreads(int threads) {
-        this.threads = threads;
+    public void setBaiduClientId(String baiduClientId) {
+        this.baiduClientId = baiduClientId;
+    }
+
+    public String getBaiduClientSecret() {
+        return baiduClientSecret;
+    }
+
+    public void setBaiduClientSecret(String baiduClientSecret) {
+        this.baiduClientSecret = baiduClientSecret;
+    }
+
+    public boolean isBaiduOcrAsync() {
+        return baiduOcrAsync;
+    }
+
+    public void setBaiduOcrAsync(boolean baiduOcrAsync) {
+        this.baiduOcrAsync = baiduOcrAsync;
     }
 }
