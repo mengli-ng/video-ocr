@@ -1,2 +1,2 @@
 up:
-	docker statck deploy -c docker-compose/docker-compose.yml
+	docker stack deploy -c docker-compose/docker-compose.yml video-ocr
