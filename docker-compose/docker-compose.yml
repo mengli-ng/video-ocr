@@ -18,7 +18,7 @@ services:
     networks:
       - video-ocr-network
     volumes:
-      - "/var/lib/video-ocr/storage:/storage"
+      - "${HOST_STORAGE_PATH:-/var/lib/video-ocr/storage}:/storage"
       - "/var/logs:/var/logs"
     environment:
       LANG: en_US.UTF-8
@@ -42,7 +42,7 @@ services:
     networks:
       - video-ocr-network
     volumes:
-      - "/var/lib/video-ocr/storage:/usr/share/nginx/html/storage" 
+      - "${HOST_STORAGE_PATH:-/var/lib/video-ocr/storage}:/usr/share/nginx/html/storage" 
     depends_on:
       - server
 
