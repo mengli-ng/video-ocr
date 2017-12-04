@@ -55,6 +55,8 @@ public class TaskService {
             parseTaskResults(task, outputPath);
             updateStatus(task, TaskStatus.FINISHED);
 
+            LOGGER.info("Task executed finished: {}", task.getVideoName());
+
         } catch (Throwable e) {
             updateStatus(task, TaskStatus.FAILED);
             throw new RuntimeException(e);
@@ -102,7 +104,6 @@ public class TaskService {
                     .forEach(image -> {
                         try {
                             String imageBase64 = BaseEncoding.base64().encode(Files.readAllBytes(image));
-                            LOGGER.info("Image base64: {}", imageBase64);
 
                             Map<String, String> parameters = new HashMap<>();
                             parameters.put("access_token", token.getAccessToken());
