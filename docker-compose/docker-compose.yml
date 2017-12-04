@@ -21,6 +21,7 @@ services:
       - "/var/lib/video-ocr/storage:/storage"
       - "/var/logs:/var/logs"
     environment:
+      LANG: en_US.UTF-8
       SERVER_CONTEXT_PATH: /ocr-server
       MYSQL_HOST_NAME: db
       MYSQL_DATABASE: video_ocr
