@@ -3,6 +3,8 @@ package xyz.dreamcoder.service;
 import com.google.common.base.Strings;
 import com.google.common.io.BaseEncoding;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import xyz.dreamcoder.client.BaiduAccessToken;
@@ -25,6 +27,7 @@ import java.util.stream.Stream;
 public class TaskService {
 
     private static final String SCRIPT_VIDEO_TO_IMAGES = "video_to_images.sh";
+    private static final Logger LOGGER = LoggerFactory.getLogger(TaskService.class);
 
     private final ScriptService scriptService;
     private final TaskProperties properties;
@@ -93,14 +96,13 @@ public class TaskService {
         BaiduAccessToken token = baiduBCEClient.getAccessToken(
                 properties.getBaiduClientId(), properties.getBaiduClientSecret());
 
-        System.out.println(token.getAccessToken());
-
         try {
             Files.list(Paths.get(outputPath))
                     .filter(path -> path.toString().endsWith(".jpg"))
                     .forEach(image -> {
                         try {
                             String imageBase64 = BaseEncoding.base64().encode(Files.readAllBytes(image));
+                            LOGGER.info("Image base64: {}", imageBase64);
 
                             Map<String, String> parameters = new HashMap<>();
                             parameters.put("access_token", token.getAccessToken());
@@ -141,10 +143,11 @@ public class TaskService {
                 .map(OCRResult.Result::getWords)
                 .collect(Collectors.joining(" "));
 
+        LOGGER.info("Result text: {}", resultText);
         Path resultPath = Paths.get(image.getParent().toString(),
                 com.google.common.io.Files.getNameWithoutExtension(String.valueOf(image)) + ".txt");
         try {
-            Files.write(resultPath, resultText.getBytes());
+            Files.write(resultPath, resultText.getBytes("utf-8"));
         } catch (IOException e) {
             e.printStackTrace();
         }

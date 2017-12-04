@@ -25,7 +25,9 @@ public interface BaiduBCEClient {
     BaiduAccessToken getAccessToken(@RequestParam("client_id") String clientId,
                                     @RequestParam("client_secret") String clientSecret);
 
-    @PostMapping(value = "${baidu.ocr.url}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "${baidu.ocr.url}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     HystrixCommand<OCRResult> accurateBasicOCR(Map<String, ?> parameters);
 }
 

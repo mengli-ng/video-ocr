@@ -19,6 +19,7 @@ services:
       - video-ocr-network
     volumes:
       - "/var/lib/video-ocr/storage:/storage"
+      - "/var/logs:/var/logs"
     environment:
       SERVER_CONTEXT_PATH: /ocr-server
       MYSQL_HOST_NAME: db
