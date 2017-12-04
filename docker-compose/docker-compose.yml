@@ -12,7 +12,7 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: video_ocr
   server:
-    image: registry.cn-beijing.aliyuncs.com/mengli/video-ocr-server_tesseract-ocr
+    image: registry.cn-beijing.aliyuncs.com/mengli/video-ocr-server_baidu-ocr
     ports:
       - "8080"
     networks:
@@ -33,7 +33,7 @@ services:
     depends_on:
       - db
   web:
-    image: registry.cn-beijing.aliyuncs.com/mengli/video-ocr-web_tesseract-ocr
+    image: registry.cn-beijing.aliyuncs.com/mengli/video-ocr-web_baidu-ocr
     ports:
       - "80:80"
     networks:
