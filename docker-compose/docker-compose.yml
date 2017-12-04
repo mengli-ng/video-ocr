@@ -30,6 +30,7 @@ services:
       BAIDU_CLIENT_SECRET: ${BAIDU_CLIENT_SECRET}
       BAIDU_OCR_URL: ${BAIDU_OCR_URL}
       BAIDU_OCR_ASYNC: ${BAIDU_OCR_ASYNC}
+      OCR_DELAY_MILLIS: ${OCR_DELAY_MILLIS}
     depends_on:
       - db
   web:

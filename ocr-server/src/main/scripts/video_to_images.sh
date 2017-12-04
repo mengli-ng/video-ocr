@@ -18,6 +18,6 @@ ffmpeg -i ${input} -vf fps=1 "${output}/%5d.jpg"
 
 for file in `find ${output} -name '*.jpg'`; do
     dest="${file%.*}_crop.jpg"
-    convert ${file}} -crop ${w}x${h}+${x}+${y} ${dest}
+    convert ${file} -crop ${w}x${h}+${x}+${y} ${dest}
     rm -f ${file}
 done

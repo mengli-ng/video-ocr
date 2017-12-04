@@ -44,6 +44,7 @@ task:
   baidu-client-id: ${BAIDU_CLIENT_ID}
   baidu-client-secret: ${BAIDU_CLIENT_SECRET}
   baidu-ocr-async: ${BAIDU_OCR_ASYNC:false}
+  ocr-delay-millis: ${OCR_DELAY_MILLIS:10}
 
 baidu:
   ocr:

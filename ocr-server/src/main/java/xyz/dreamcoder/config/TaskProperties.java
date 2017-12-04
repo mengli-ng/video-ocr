@@ -11,6 +11,7 @@ public class TaskProperties {
     private String baiduClientId;
     private String baiduClientSecret;
     private boolean baiduOcrAsync;
+    private int ocrDelayMillis;
 
     public String getOutputPath() {
         return outputPath;
@@ -42,5 +43,13 @@ public class TaskProperties {
 
     public void setBaiduOcrAsync(boolean baiduOcrAsync) {
         this.baiduOcrAsync = baiduOcrAsync;
+    }
+
+    public int getOcrDelayMillis() {
+        return ocrDelayMillis;
+    }
+
+    public void setOcrDelayMillis(int ocrDelayMillis) {
+        this.ocrDelayMillis = ocrDelayMillis;
     }
 }

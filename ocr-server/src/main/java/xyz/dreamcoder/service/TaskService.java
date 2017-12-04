@@ -112,13 +112,13 @@ public class TaskService {
                                             parseResult(image, result);
 
                                         }, Throwable::printStackTrace);
-
-                                // wait a moment to send next request.
-                                Thread.sleep(10);
                             } else {
                                 OCRResult result = baiduBCEClient.accurateBasicOCR(parameters).execute();
                                 parseResult(image, result);
                             }
+
+                            // wait a moment to send next request.
+                            Thread.sleep(properties.getOcrDelayMillis());
 
                         } catch (IOException | InterruptedException e) {
                             e.printStackTrace();
