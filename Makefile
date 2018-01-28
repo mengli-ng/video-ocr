@@ -1,4 +1,4 @@
-u:
+up:
 	docker stack deploy -c docker-compose.yml video-ocr
 
 down:
