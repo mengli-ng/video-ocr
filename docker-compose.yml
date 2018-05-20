@@ -12,7 +12,7 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: video_ocr
   server:
-    image: registry.cn-beijing.aliyuncs.com/mengli/video-ocr-server_baidu-ocr
+    image: registry.cn-beijing.aliyuncs.com/mengli/video-ocr-server_baidu-ocr_v2
     ports:
       - "8080"
     networks:
@@ -28,8 +28,7 @@ services:
       MYSQL_ROOT_PASSWORD: password
       STORAGE_BASE_PATH: /storage
       STORAGE_BASE_URL: http://${HOST_IP_ADDRESS}/storage
-      BAIDU_CLIENT_ID: ${BAIDU_CLIENT_ID}
-      BAIDU_CLIENT_SECRET: ${BAIDU_CLIENT_SECRET}
+      BAIDU_OCR_BASE_URL: ${BAIDU_OCR_BASE_URL}
       BAIDU_OCR_URL: ${BAIDU_OCR_URL}
       BAIDU_OCR_ASYNC: ${BAIDU_OCR_ASYNC}
       OCR_DELAY_MILLIS: ${OCR_DELAY_MILLIS}
