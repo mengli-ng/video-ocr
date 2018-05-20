@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 public class TaskProperties {
 
     private String outputPath;
-    private String baiduClientId;
-    private String baiduClientSecret;
     private boolean baiduOcrAsync;
     private int ocrDelayMillis;
 
@@ -19,22 +17,6 @@ public class TaskProperties {
 
     public void setOutputPath(String outputPath) {
         this.outputPath = outputPath;
-    }
-
-    public String getBaiduClientId() {
-        return baiduClientId;
-    }
-
-    public void setBaiduClientId(String baiduClientId) {
-        this.baiduClientId = baiduClientId;
-    }
-
-    public String getBaiduClientSecret() {
-        return baiduClientSecret;
-    }
-
-    public void setBaiduClientSecret(String baiduClientSecret) {
-        this.baiduClientSecret = baiduClientSecret;
     }
 
     public boolean isBaiduOcrAsync() {

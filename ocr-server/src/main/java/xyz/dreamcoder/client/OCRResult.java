@@ -1,58 +1,52 @@
 package xyz.dreamcoder.client;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Strings;
+import lombok.Data;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
  * @author Meng Li
  */
+@Data
 public class OCRResult {
 
-    public static class Result {
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-        private String words;
+    private String err_no;
+    private String err_msg;
+    private String format;
+    private String result;
 
-        public String getWords() {
-            return words;
+    @Data
+    static class Result {
+        private String errno;
+        private String errmas;
+        private String querysign;
+        private Ret ret;
+    }
+
+    @Data
+    static class Ret {
+        private String word;
+    }
+
+    public String getWord() {
+
+        if (Strings.isNullOrEmpty(result)) {
+            return null;
         }
 
-        public void setWords(String words) {
-            this.words = words;
+        try {
+            Result result = OBJECT_MAPPER.readValue(getResult(), Result.class);
+            return result.getRet() == null ? null : result.getRet().getWord();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-    }
-
-    @JsonProperty("error_code")
-    private String errorCode;
-
-    @JsonProperty("error_msg")
-    private String errorMessage;
-
-    @JsonProperty("words_result")
-    private List<Result> wordsResult = new ArrayList<>();
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
-    public List<Result> getWordsResult() {
-        return wordsResult;
-    }
-
-    public void setWordsResult(List<Result> wordsResult) {
-        this.wordsResult = wordsResult;
     }
 }

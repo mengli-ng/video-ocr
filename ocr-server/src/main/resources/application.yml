@@ -41,14 +41,13 @@ script:
 
 task:
   output-path: /tmp
-  baidu-client-id: ${BAIDU_CLIENT_ID}
-  baidu-client-secret: ${BAIDU_CLIENT_SECRET}
   baidu-ocr-async: ${BAIDU_OCR_ASYNC:false}
   ocr-delay-millis: ${OCR_DELAY_MILLIS:10}
 
 baidu:
   ocr:
-    url: ${BAIDU_OCR_URL:/rest/2.0/ocr/v1/webimage}
+    base-url: ${BAIDU_OCR_BASE_URL:http://180.76.111.230:8120}}
+    url: ${BAIDU_OCR_URL:/GeneralClassifyService/classify}
 
 activation:
   code-path: /activation/activation_code

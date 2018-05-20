@@ -27,6 +27,8 @@ import java.util.stream.Stream;
 public class TaskService {
 
     private static final String SCRIPT_VIDEO_TO_IMAGES = "video_to_images.sh";
+    private static final String REQUEST_URL = "type=st_ocrapi&appid=20005&detecttype=LocateRecognize&languagetype=CHN_ENG&imgDirection=setImgDirFlag&object_type=webimage_v1";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(TaskService.class);
 
     private final ScriptService scriptService;
@@ -94,20 +96,17 @@ public class TaskService {
     }
 
     private void executeBaiduOCR(String outputPath) {
-
-        BaiduAccessToken token = baiduBCEClient.getAccessToken(
-                properties.getBaiduClientId(), properties.getBaiduClientSecret());
-
         try {
             Files.list(Paths.get(outputPath))
                     .filter(path -> path.toString().endsWith(".jpg"))
                     .forEach(image -> {
                         try {
-                            String imageBase64 = BaseEncoding.base64().encode(Files.readAllBytes(image));
-
                             Map<String, String> parameters = new HashMap<>();
-                            parameters.put("access_token", token.getAccessToken());
-                            parameters.put("image", imageBase64);
+
+                            String imageBase64 = Base64.getEncoder().encodeToString(Files.readAllBytes(image));
+                            String requestUrl = REQUEST_URL + "&image=" + imageBase64;
+
+                            parameters.put("data", Base64.getEncoder().encodeToString(requestUrl.getBytes()));
 
                             if (properties.isBaiduOcrAsync()) {
                                 baiduBCEClient.accurateBasicOCR(parameters).observe()
@@ -136,19 +135,17 @@ public class TaskService {
 
     private static void parseResult(Path image, OCRResult result) {
 
-        if (!Strings.isNullOrEmpty(result.getErrorMessage())) {
-            throw new IllegalStateException(result.getErrorMessage());
+        if (!Strings.isNullOrEmpty(result.getErr_msg())) {
+            throw new IllegalStateException(result.getErr_msg());
         }
 
-        String resultText = result.getWordsResult().stream()
-                .map(OCRResult.Result::getWords)
-                .collect(Collectors.joining(" "));
+        String word = result.getWord();
+        LOGGER.info("Result text: {}", word);
 
-        LOGGER.info("Result text: {}", resultText);
         Path resultPath = Paths.get(image.getParent().toString(),
                 com.google.common.io.Files.getNameWithoutExtension(String.valueOf(image)) + ".txt");
         try {
-            Files.write(resultPath, resultText.getBytes("utf-8"));
+            Files.write(resultPath, word.getBytes("utf-8"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -192,5 +189,14 @@ public class TaskService {
     private void updateStatus(Task task, TaskStatus status) {
         task.setStatus(status);
         taskRepository.save(task);
+    }
+
+
+    public static void main(String[] args) throws IOException {
+        String imageBase64 = Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get("/Users/mengli/Desktop/testimage.jpeg")));
+        String data1 = REQUEST_URL + "&image=" + imageBase64;
+        String data = Base64.getEncoder().encodeToString(data1.getBytes());
+
+        System.out.println(data);
     }
 }

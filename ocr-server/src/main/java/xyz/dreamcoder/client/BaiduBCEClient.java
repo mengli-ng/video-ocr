@@ -18,26 +18,9 @@ import java.util.Map;
 /**
  * @author Meng Li
  */
-@FeignClient(name = "baiduBCEClient", url = "https://aip.baidubce.com", configuration = FormUrlEncodedConfiguration.class)
+@FeignClient(name = "baiduBCEClient", url = "${baidu.ocr.base-url}")
 public interface BaiduBCEClient {
 
-    @PostMapping("/oauth/2.0/token?grant_type=client_credentials")
-    BaiduAccessToken getAccessToken(@RequestParam("client_id") String clientId,
-                                    @RequestParam("client_secret") String clientSecret);
-
-    @PostMapping(value = "${baidu.ocr.url}",
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "${baidu.ocr.url}")
     HystrixCommand<OCRResult> accurateBasicOCR(Map<String, ?> parameters);
-}
-
-class FormUrlEncodedConfiguration {
-
-    @Autowired
-    private ObjectFactory<HttpMessageConverters> messageConverters;
-
-    @Bean
-    public Encoder feignFormEncoder() {
-        return new SpringFormEncoder(new SpringEncoder(messageConverters));
-    }
 }
