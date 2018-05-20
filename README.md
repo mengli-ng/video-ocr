@@ -1,161 +1,21 @@
-# video-ocr
-video-ocr是一个视频字幕识别的应用程序，包括服务端(ocr-server)和客户端(web-console)，具有视频管理和任务管理的功能，
-字幕识别通过[imagemagick](https://www.imagemagick.org)和[tesseract-ocr](https://github.com/tesseract-ocr/tesseract)实现。
+## 安装docker
 
-## 开发
-video-ocr使用了以下框架
+<pre>./install-docker.sh</pre>
 
-* [spring-boot](https://projects.spring.io/spring-boot/)
-* [angular2](https://angular.io/)
-* [angular-cli](http://cli.angular.io/)
-* [angular-material](https://material.angular.io/)
+## 设置env
 
-## 发布到阿里云镜像仓库
+<pre>vim /etc/profile</pre>
 
-国内访问Docker Hub的速度很慢，video-ocr使用了阿里云的镜像仓库
+在最后增加一行
+<pre>export HOST_IP_ADDRESS="public_ip_address"</pre>
 
-* 在ocr-server中执行
-<pre>
-mvn clean package
-cd docker
-./build.sh
-</pre>
+执行
+<pre>source /etc/profile</pre>
 
-* 在web-console中执行
-<pre>
-npm run release
-cd docker
-./build.sh
-</pre>
+## 创建文件夹
+<pre>mkdir -p /var/lib/mysql</pre>
+<pre>mkdir -p /var/logs</pre>
 
-## 部署
-
-video-ocr使用[docker](https://www.docker.com/)进行部署，部署时需要执行以下步骤（以下以centos为例，其余环境下的操作类似）
-
-1. 安装[docker](https://docs.docker.com/engine/installation/linux/centos/)
-
-<pre>
-sudo yum install -y yum-utils
-</pre>
-<pre>
-$ sudo yum-config-manager \
-    --add-repo \
-    https://download.docker.com/linux/centos/docker-ce.repo
-</pre>
-<pre>
-sudo yum-config-manager --enable docker-ce-edge
-</pre>
-<pre>
-sudo yum makecache fast
-</pre>
-<pre>
-sudo yum install docker-ce
-</pre>
-<pre>
-sudo systemctl enable docker
-</pre>
-<pre>
-sudo systemctl start docker
-</pre>
-
-
-2. 安装[docker-compose](https://docs.docker.com/compose/install/)
-
-<pre>
-$ curl -L "https://github.com/docker/compose/releases/download/1.11.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-</pre>
-<pre>
-chmod +x /usr/local/bin/docker-compose
-</pre>
-
-3. 配置阿里云镜像加速器
-
-从Docker Hub直接下载镜像的速度很慢，需要配置国内的镜像加速器
-<pre>
-sudo mkdir -p /etc/docker
-sudo vi /etc/docker/daemon.json
-</pre>
-输入以下内容
-<pre>
-{
-  "registry-mirrors": ["https://6adape9u.mirror.aliyuncs.com"]
-}
-</pre>
-重启Docker
-<pre>
-sudo systemctl daemon-reload
-sudo systemctl restart docker
-</pre>
-
-4. 下载并运行docker-compose脚本
-
-<pre>
-mkdir /usr/local/video-ocr
-cd /usr/local/video-ocr
-wget https://raw.githubusercontent.com/dream83619/video-ocr/master/docker-compose/docker-compose.yml
-wget https://raw.githubusercontent.com/dream83619/video-ocr/master/docker-compose/start.sh
-chmod +x start.sh
-</pre>
-
-启动服务
-<pre>
-./start.sh -h &lt;ip&gt; -p &lt;port&gt;
-</pre>
-
-start.sh包括以下参数：
-* -h 服务器IP地址，默认为网卡1的IP地址
-* -p 服务端口号，默认为80
-
-客户端将通过 _http://&lt;ip&gt;:&lt;port&gt;/_ 访问服务
-
-5. 将docker-compose脚本制作为service
-
-将服务制作为service，使服务以daemon方式运行，并随系统启动，通过如下方式制作service
-<pre>
-vi /etc/systemd/system/video-ocr.service
-</pre>
-输入以下内容
-<pre>
-[Unit]
-Description=video-ocr
-Requires=docker.service
-After=syslog.target network.target docker.service
-
-[Service]
-User=root
-ExecStart=/path/to/start.sh -h &lt;ip&gt; -p &lt;port&gt;
-SuccessExitStatus=143
-
-[Install]
-WantedBy=multi-user.target
-</pre>
-将User, ExecStart修改为为实际的用户和路径
-
-启用服务
-<pre>
-systemctl enable video-ocr
-</pre>
-启动服务
-<pre>
-systemctl start video-ocr
-</pre>
-查看服务日志
-<pre>
-journalctl -f -u video-ocr
-</pre>
-
-6. 授权
-
-第一次启动服务会因为没有授权而失败，在日志中会显示如下错误信息：
-<pre>
-*************************************************
-                                                 
-             VERIFICATION ERROR!!!               
-                                                 
-     MACHINE IDENTIFIER: &lt;machine_identifier&gt;                      
-                                                 
-*************************************************
-</pre>
-
-拷贝&lt;machine_identifier&gt;中的值并生成授权码文件，
-将授权码文件`activation_code`拷贝到`/var/video-ocr/activation`目录中，重新启动服务即可完成授权。
+## 初始化docker swarm并部署docker service
+<pre>docker swarm init</pre>
+<pre>docker stack deploy -c docker-compose.yml video-ocr</pre>
