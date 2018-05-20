@@ -139,13 +139,13 @@ public class TaskService {
             throw new IllegalStateException(result.getErr_msg());
         }
 
-        String word = result.getWord();
-        LOGGER.info("Result text: {}", word);
+        String words = result.getWords().stream().collect(Collectors.joining(" "));
+        LOGGER.info("Result text: {}", words);
 
         Path resultPath = Paths.get(image.getParent().toString(),
                 com.google.common.io.Files.getNameWithoutExtension(String.valueOf(image)) + ".txt");
         try {
-            Files.write(resultPath, word.getBytes("utf-8"));
+            Files.write(resultPath, words.getBytes("utf-8"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -193,7 +193,7 @@ public class TaskService {
 
 
     public static void main(String[] args) throws IOException {
-        String imageBase64 = Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get("/Users/mengli/Desktop/testimage.jpeg")));
+        String imageBase64 = Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get("/Users/mengli/00001.jpg")));
         String data1 = REQUEST_URL + "&image=" + imageBase64;
         String data = Base64.getEncoder().encodeToString(data1.getBytes());
 
