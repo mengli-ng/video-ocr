@@ -28,8 +28,8 @@ services:
       MYSQL_ROOT_PASSWORD: password
       STORAGE_BASE_PATH: /storage
       STORAGE_BASE_URL: http://${HOST_IP_ADDRESS}/storage
-      BAIDU_OCR_BASE_URL: ${BAIDU_OCR_BASE_URL}
-      BAIDU_OCR_URL: ${BAIDU_OCR_URL}
+      BAIDU_OCR_BASE_URL: ${BAIDU_OCR_BASE_URL:-http://180.76.111.230:8120}
+      BAIDU_OCR_URL: ${BAIDU_OCR_URL:-/GeneralClassifyService/classify}
       BAIDU_OCR_ASYNC: ${BAIDU_OCR_ASYNC:-false}
       OCR_DELAY_MILLIS: ${OCR_DELAY_MILLIS:-10}
     depends_on:
