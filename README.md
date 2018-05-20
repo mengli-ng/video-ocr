@@ -16,6 +16,6 @@
 <pre>mkdir -p /var/lib/mysql</pre>
 <pre>mkdir -p /var/logs</pre>
 
-## 初始化docker swarm并部署docker service
+## 初始化docker swarm并部署
 <pre>docker swarm init</pre>
 <pre>docker stack deploy -c docker-compose.yml video-ocr</pre>
