@@ -15,6 +15,7 @@
 ## 创建文件夹
 <pre>mkdir -p /var/lib/mysql</pre>
 <pre>mkdir -p /var/logs</pre>
+<pre>mkdir -p /var/lib/video-ocr/storage</pre>
 
 ## 初始化docker swarm并部署
 <pre>docker swarm init</pre>
