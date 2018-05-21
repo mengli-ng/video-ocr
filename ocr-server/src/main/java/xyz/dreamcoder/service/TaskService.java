@@ -176,8 +176,6 @@ public class TaskService {
                         result.setPosition(position);
                         result.setText(text);
                         task.getResults().add(result);
-                    } else {
-                        task.getResults().get(task.getResults().size() - 1).setPosition(position);
                     }
                     lastText[0] = text;
                 }
@@ -190,7 +188,7 @@ public class TaskService {
     private boolean isSimilar(String text, String lastText) {
 
         NormalizedLevenshtein normalizedLevenshtein = new NormalizedLevenshtein();
-        return normalizedLevenshtein.similarity(text, lastText) <= properties.getTextSimilarity();
+        return normalizedLevenshtein.similarity(text, lastText) >= properties.getTextSimilarity();
     }
 
     private void updateStatus(Task task, TaskStatus status) {
