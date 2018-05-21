@@ -32,6 +32,7 @@ services:
       BAIDU_OCR_URL: ${BAIDU_OCR_URL:-/GeneralClassifyService/classify}
       BAIDU_OCR_ASYNC: ${BAIDU_OCR_ASYNC:-false}
       OCR_DELAY_MILLIS: ${OCR_DELAY_MILLIS:-10}
+      TEXT_SIMILARITY: ${TEXT_SIMILARITY:-0.5}
     depends_on:
       - db
   web:
