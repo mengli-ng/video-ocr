@@ -2,7 +2,7 @@
 <pre>
 git clone https://github.com/dream83619/video-ocr
 cd video-ocr
-git checkout <branch>
+git checkout "branch"
 </pre>
 
 ## 安装docker
