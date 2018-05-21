@@ -10,6 +10,7 @@ public class TaskProperties {
     private String outputPath;
     private boolean baiduOcrAsync;
     private int ocrDelayMillis;
+    private double textSimilarity = 0.5;
 
     public String getOutputPath() {
         return outputPath;
@@ -33,5 +34,13 @@ public class TaskProperties {
 
     public void setOcrDelayMillis(int ocrDelayMillis) {
         this.ocrDelayMillis = ocrDelayMillis;
+    }
+
+    public double getTextSimilarity() {
+        return textSimilarity;
+    }
+
+    public void setTextSimilarity(double textSimilarity) {
+        this.textSimilarity = textSimilarity;
     }
 }

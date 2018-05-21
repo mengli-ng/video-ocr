@@ -2,6 +2,7 @@ package xyz.dreamcoder.service;
 
 import com.google.common.base.Strings;
 import com.google.common.io.BaseEncoding;
+import info.debatty.java.stringsimilarity.NormalizedLevenshtein;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -163,14 +164,14 @@ public class TaskService {
         Stream.of(txtFiles).sorted(Comparator.comparing(File::getName)).forEach(txtFile -> {
             try {
                 String fileName = com.google.common.io.Files.getNameWithoutExtension(txtFile.getName());
-                int position = (Integer.parseInt(fileName) - 1) * 1000; // milliseconds
+                int position = Integer.parseInt(fileName) * 1000; // milliseconds
                 String text = FileUtils.readFileToString(txtFile, "utf-8")
                         .replace("\r\n", "")
                         .replace("\n", "")
                         .trim();
 
                 if (!Strings.isNullOrEmpty(text)) {
-                    if (!text.equals(lastText[0])) {
+                    if (!isSimilar(text, lastText[0])) {
                         TaskResult result = new TaskResult();
                         result.setPosition(position);
                         result.setText(text);
@@ -186,17 +187,14 @@ public class TaskService {
         });
     }
 
+    private boolean isSimilar(String text, String lastText) {
+
+        NormalizedLevenshtein normalizedLevenshtein = new NormalizedLevenshtein();
+        return normalizedLevenshtein.similarity(text, lastText) <= properties.getTextSimilarity();
+    }
+
     private void updateStatus(Task task, TaskStatus status) {
         task.setStatus(status);
         taskRepository.save(task);
-    }
-
-
-    public static void main(String[] args) throws IOException {
-        String imageBase64 = Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get("/Users/mengli/00001.jpg")));
-        String data1 = REQUEST_URL + "&image=" + imageBase64;
-        String data = Base64.getEncoder().encodeToString(data1.getBytes());
-
-        System.out.println(data);
     }
 }

@@ -101,6 +101,11 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>info.debatty</groupId>
+			<artifactId>java-string-similarity</artifactId>
+			<version>1.1.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>ocr-server</finalName>

@@ -43,6 +43,7 @@ task:
   output-path: /tmp
   baidu-ocr-async: ${BAIDU_OCR_ASYNC:false}
   ocr-delay-millis: ${OCR_DELAY_MILLIS:10}
+  text-similarity: ${TEXT_SIMILARITY:0.5}
 
 baidu:
   ocr:
