@@ -1,4 +1,4 @@
-## clone源代码
+## clone项目
 <pre>
 git clone https://github.com/dream83619/video-ocr
 cd video-ocr
