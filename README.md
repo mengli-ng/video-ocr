@@ -1,3 +1,8 @@
+## clone源代码
+git clone https://github.com/dream83619/video-ocr
+cd video-ocr
+git checkout <branch>
+
 ## 安装docker
 
 <pre>./install-docker.sh</pre>
@@ -21,4 +26,4 @@ mkdir -p /var/lib/video-ocr/storage
 
 ## 初始化docker swarm并部署
 <pre>docker swarm init</pre>
-<pre>docker stack deploy -c docker-compose.yml video-ocr</pre>
+<pre>make up</pre>
