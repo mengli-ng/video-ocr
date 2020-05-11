@@ -29,3 +29,5 @@ mkdir -p /var/lib/video-ocr/storage
 ## 初始化docker swarm并部署
 <pre>docker swarm init</pre>
 <pre>make up</pre>
+
+
